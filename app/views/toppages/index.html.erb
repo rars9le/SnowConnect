@@ -1,0 +1,23 @@
+<% if logged_in? %>
+  <div class="row">
+    <aside class="col-sm-4">
+      <%= form_with(model: @post, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
+        </div>
+        <%= f.submit '投稿', class: 'btn btn-secondary btn-block' %>
+      <% end %>
+    </aside>
+    <div class="col-sm-8">
+      <%= render 'posts/posts', posts: @posts %>
+    </div>
+  </div>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>Welcome to the SnowConnect</h1>
+      <%= link_to 'ログイン', login_path, class: 'btn btn-lg btn-secondary' %>
+      <p class = "mt-2">未登録の方は<%= link_to 'こちら', signup_path %></p>
+    </div>
+  </div>
+<% end %>
