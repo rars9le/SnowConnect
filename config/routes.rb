@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get 'static_pages/home'
+  root 'static_pages#home'
   
-  root to: 'toppages#index'
-  get 'signup', to: 'users#new'
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
-  
-  resources :users, only: [:index, :show, :new, :create, :edit, :update] do
+  resources :users, only: [:index, :show, :edit, :update, :destroy] do
     member do
       get :followings
       get :followers
@@ -15,9 +10,29 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :posts, only: [:create, :destroy] do
+  devise_for :users,
+    path: '',
+    path_names: {
+      sign_up: '',
+      sign_in: 'login',
+      sign_out: 'logout',
+      registration: 'signup'
+    },
+    controllers: {
+      registrations: 'users/registrations',
+      sessions: 'users/sessions',
+      passwords: 'users/passwords'
+    }
+  devise_scope :user do
+    get 'signup', to: 'users/registrations#new'
+    get 'login', to: 'users/sessions#new'
+    get 'logout', to: 'users/sessions#destroy'
+  end
+
+  resources :posts do
     collection do
       get :search
+      get :feed
     end
   end
   

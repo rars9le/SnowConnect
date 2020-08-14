@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.integer :sex
       t.integer :sex_open_range
       t.integer :age
-      t.string :age_open_range
+      t.integer :age_open_range
       t.text :introduction
       t.string :snow_style
       t.string :play_style
