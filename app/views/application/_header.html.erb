@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <!--%= link_to image_tag('logo.png', class: 'navbar-logo'), root_path, class: 'navbar-brand' %-->
+  <a class="navbar-brand" href="/">SnowConnect</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? && current_user.admin?  %>
+        <li class="nav-item">
+          <%= header_link_item(icon('fas', 'users') + ' すべてのユーザー', users_path) %>
+        </li>
+      <% end %>
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= header_link_item(icon('fas', 'rss') + ' フィード', feed_posts_path) %>
+        </li>
+      <% end %>
+      <li class="nav-item">
+        <%= header_link_item(icon('fas', 'th') + ' 新着投稿', posts_path) %>
+      </li>
+      <li class="nav-item">
+        <%= header_link_item(icon('fa', 'heart') + ' 人気投稿', popular_posts_path) %>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= header_link_item(icon('fas', 'search') + ' 検索', search_posts_path) %>
+        </li>
+        <li class="nav-item dropdown">
+          <%= link_to icon('fas', 'user') + " #{current_user.name}さん", '#', class: "nav-link dropdown-toggle", id: "navbarDropdown", role: "button", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } %>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to icon('fas', 'user') + ' マイページ', user_path(current_user), class: 'dropdown-item' %>
+            <%= link_to icon('fas', 'fa-cog') + ' 設定', settings_path(current_user), class: 'dropdown-item' %>
+            <%= link_to icon('fas', 'sign-out-alt') + ' ログアウト', logout_path, class: 'dropdown-item' %>
+          </div>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= header_link_item(icon('fas', 'user-plus') + ' 新規登録', signup_path) %>
+        </li>
+        <li class="nav-item">
+          <%= header_link_item(icon('fas', 'sign-in-alt') + ' ログイン', login_path) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

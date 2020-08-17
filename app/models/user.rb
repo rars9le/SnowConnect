@@ -7,13 +7,11 @@ class User < ApplicationRecord
   mount_uploader :image, ImageUploader
   
   validates :name, presence: true, length: { maximum: 50 }
-  validates :self_introduction, length: { maximum: 500 }
+  validates :introduction, length: { maximum: 500 }
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
-                    
-  has_secure_password
-  
+
   has_many :posts
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow
@@ -53,4 +51,5 @@ class User < ApplicationRecord
   def feed_posts
     Post.where(user_id: self.following_ids + [self.id])
   end
+  
 end

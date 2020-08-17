@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_tag(search_posts_path,:method => 'get') do %>
+      <div class="form-group">
+      <%= text_field_tag :search, '', placeholder: "キーワード検索" %>
+      <%= submit_tag '検索', class: 'btn btn-secondary', :name => nil %>
+      </div>
+    <% end %>
+    
+    <ul class="list-unstyled mt-3">
+      <% @posts.each do |post| %>
+        <li class="media mb-3">
+          <% if post.user.image? %>
+            <img class="mr-2 rounded icon" src='<%=  post.user.image %>' width="50px" height="50px" alt="ユーザーアイコン">
+          <% else %>
+            <image src="/assets/default.png" class=" mr-2 rounded icon" width="50px" height="50px" alt="ユーザーアイコン" %>
+          <% end %>
+          <div class="media-body">
+            <div>
+              <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"><%= "@" + post.user.alias_name %> <%= post.created_at.to_s(:datetime_jp) %></span>
+            </div>
+            <div>
+              <p class="mb-0"><%= post.content %></p>
+            </div>
+            <div class ="d-flex flex-row">
+              <div>
+                <% if current_user == post.user %>
+                  <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
+                    <i class="far fa-trash-alt"></i> 
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="ml-1">
+                <% if current_user.likes?(post) %>
+                  <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
+                    <%= hidden_field_tag :post_id, post.id %>
+                    <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
+                  <% end %>
+                <% else %>
+                  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
+                    <%= hidden_field_tag :post_id, post.id %>
+                    <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+      <%= paginate @posts %>
+    </ul>
+    
+  </div>
+</div>

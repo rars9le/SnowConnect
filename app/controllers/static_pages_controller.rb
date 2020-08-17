@@ -9,3 +9,4 @@ class StaticPagesController < ApplicationController
     #@posts = current_user.feed_posts.order(id: :desc).page(params[:page])
   end
 end
+

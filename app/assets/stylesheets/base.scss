@@ -1,0 +1,292 @@
+/* mixins, variables, etc. */
+
+@mixin sm { @media (min-width: 576px) { @content; } }
+@mixin md { @media (min-width: 768px) { @content; } }
+@mixin lg { @media (min-width: 992px) { @content; } }
+
+/* body */
+body {
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+/* header */
+.navbar {
+  border-radius: 0px;
+}
+.navbar-logo {
+  width: 150px;
+}
+.navbar-brand::before {
+  content: "\00a0";
+}
+
+/* main */
+main {
+  flex: 1;
+}
+
+/* footer */
+footer {
+  background: #343a40;
+  color: #fff;
+  text-align: center;
+  p {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    margin-bottom: 0;
+  }
+}
+
+/* UserForm */
+.user_form {
+  max-width: 440px;
+  margin-top: 30px;
+}
+
+.form_title {
+  margin-bottom: 15px;
+}
+
+/* PostForm */
+.post_form {
+  margin-top: 15px;
+}
+
+/* いいね関連 */
+.btn-cantlike {
+  cursor: default;
+  color: #f90e43;
+  border: 1px solid #f90e43;
+  border-radius: 50rem;
+  &:hover {
+    color: #f90e43;
+    background-color: #fff;
+  }
+}
+.btn-like {
+  color: #f90e43;
+  border: 1px solid #f90e43;
+  border-radius: 50rem;
+  &:hover {
+    color: #fff;
+    background-color: #f90e43;
+  }
+}
+.btn-unlike {
+  color: #f90e43;
+  background-color: rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 50rem;
+  &:hover {
+    color: #fff;
+    background-color: rgba(0,0,0,0.5);
+  }
+}
+
+/* フォロー関連 */
+.btn-follow {
+  min-width: 104px;
+  border-radius: 50rem;
+  color: #fff;
+  background-color: #f90e43;
+  &:hover {
+    color: #f90e43;
+    background-color: #fff;
+    border-color: #f90e43;
+  }
+}
+.btn-unfollow {
+  min-width: 104px;
+  border-radius: 50rem;
+  color: #f90e43;
+  background-color: rgba(0,0,0,0.1);
+  &:hover {
+    color: rgba(0,0,0,0.5);
+  }
+}
+
+/* 検索フォーム関連 */
+.search-form {
+  background-color: #ddd;
+  border: solid 2px #707070;
+  border-radius: 1.5rem;
+  padding: 10px 20px;
+}
+@media (min-width: 1200px) {
+  .search-form {
+    max-width: 1040px;
+  }
+}
+
+/* その他 */
+.hidden {
+  display: none;
+}
+
+.user-card {
+  background-color: rgba(0,0,0,0.1);
+  padding: 20px;
+  min-height: 280px;
+  .user-name {
+    margin: 15px auto 10px auto;
+    text-decoration: none;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+
+.user-status {
+  text-align: center;
+  line-height: 18px;
+  white-space: nowrap;
+  margin-right: auto;
+  margin-left: auto;
+
+  .status-name {
+    white-space: nowrap;
+    font-size: 0.7rem;
+    font-weight: 400;
+    display: block;
+    @include md {
+      display: inline;
+      font-size: 0.95rem
+    }
+  }
+
+  .status-value {
+    display: inline;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+}
+
+nav.nav-pills .nav-link {
+  color: #007bff;
+  border-radius: 0;
+}
+nav.nav-pills {
+  border: solid 1px cornflowerblue;
+  border-radius: 0.5rem;
+  &.nav-login {
+    .nav-link {
+      &:first-child {
+        border-top-left-radius: 0.45rem;
+        border-bottom-left-radius: 0.45rem;
+      }
+      &:nth-child(2) {
+        border-left: solid 0.5px;
+        border-right: solid 0.5px;
+      }
+      &:last-child {
+        border-top-right-radius: 0.45rem;
+        border-bottom-right-radius: 0.45rem;
+      }
+    }
+  }
+  &.nav-notlogin {
+    .nav-link {
+      &:first-child {
+        border-top-left-radius: 0.45rem;
+        border-bottom-left-radius: 0.45rem;
+      }
+      &:last-child {
+        border-top-right-radius: 0.45rem;
+        border-bottom-right-radius: 0.45rem;
+      }
+    }
+  }
+}
+
+.no-contents {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 1.15rem;
+  width: 100%;
+  margin-top: 80px;
+  @include sm {
+    height: 320px;
+  }
+  .no-contents-title {
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+  }
+  .no-contents-explanation {
+    max-width: 440px;
+    padding: 0 30px;
+  }
+}
+
+/* InfiniteScroll */
+.loadmore-btn-wrapper {
+  margin: 0 5px 15px 5px;
+  .btn {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  .loadmore-btn {
+    font-size: 1rem;
+
+    border-radius: 0.6rem;
+    height: 43px;
+    width: 50%;
+  }
+}
+.loader-ellips {
+  font-size: 22px;
+  position: relative;
+  width: 4em;
+  height: 1em;
+  margin: 10px auto;
+}
+
+.loader-ellips__dot {
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.5em;
+  background: #555;
+  position: absolute;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+.loader-ellips__dot:nth-child(1),
+.loader-ellips__dot:nth-child(2) {
+  left: 0;
+}
+.loader-ellips__dot:nth-child(3) { left: 1.5em; }
+.loader-ellips__dot:nth-child(4) { left: 3em; }
+
+@keyframes reveal {
+  from { transform: scale(0.001); }
+  to { transform: scale(1); }
+}
+
+@keyframes slide {
+  to { transform: translateX(1.5em) }
+}
+
+.loader-ellips__dot:nth-child(1) {
+  animation-name: reveal;
+}
+
+.loader-ellips__dot:nth-child(2),
+.loader-ellips__dot:nth-child(3) {
+  animation-name: slide;
+}
+
+.loader-ellips__dot:nth-child(4) {
+  animation-name: reveal;
+  animation-direction: reverse;
+}
+
+.date_range {
+  text-align: center;
+  margin-top: 14px;
+}

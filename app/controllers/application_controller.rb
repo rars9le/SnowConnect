@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
 
   private
   
+  # ページネーション[1ページ表示数]
+  PER = 12
+
   def counts(user)
     @count_posts = user.posts.count
     @count_followings = user.followings.count

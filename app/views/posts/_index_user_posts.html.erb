@@ -1,0 +1,14 @@
+<%= render "shared/success_messages" %>
+
+<% if user_signed_in? %>
+    <div class="row">
+      <aside class="col-sm-4">
+        <%= form_with(model: @post, local: true) do |f| %>
+          <div class="form-group">
+            <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
+          </div>
+          <%= f.submit '投稿', class: 'btn btn-secondary btn-block' %>
+        <% end %>
+      </aside>
+    </div>
+<% end %>
