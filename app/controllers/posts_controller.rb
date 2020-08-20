@@ -33,6 +33,7 @@ class PostsController < ApplicationController
   end
 
   def popular   
+    #@popular_posts = Post.all.order('count(favorites.user_id) desc').page(params[:page]).per(PER)
     @popular_posts = Post.unscoped.joins(:favorites).group(:post_id).order('count(favorites.user_id) desc').page(params[:page]).per(PER)
     @popular_posts = @popular_posts.includes(:user)
   end
@@ -44,7 +45,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:content)
+    params.permit(:content)
   end
 
   def correct_user

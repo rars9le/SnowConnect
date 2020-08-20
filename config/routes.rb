@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     end
   end
   
+  post '/posts/feed', to: 'posts#create'
+
   resources :relationships, only: [:create, :destroy]
   resources :favorites, only: [:create, :destroy]
 

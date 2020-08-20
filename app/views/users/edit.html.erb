@@ -8,11 +8,11 @@
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'layouts/error_messages', model: f.object %>
       
-      <%= f.label :image, 'プロフィール画像' %>
+      <%= f.label :avator, 'プロフィール画像' %>
       <div class="d-flex flex-row">
-        <%= image_tag @user.image_url(:thumb ) if @user.image.present? %>
+        <%= image_tag @user.image_url(:thumb ) if @user.avator.present? %>
         <div class="form-group d-flex flex-column-reverse m-3">
-          <%= f.file_field :image %>
+          <%= f.file_field :avator %>
         </div>
       </div>
 

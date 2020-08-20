@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   before_save { self.email.downcase! }
-  mount_uploader :image, ImageUploader
+  mount_uploader :avator, AvatorUploader
   
   validates :name, presence: true, length: { maximum: 50 }
   validates :introduction, length: { maximum: 500 }

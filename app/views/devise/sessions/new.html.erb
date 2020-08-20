@@ -29,7 +29,7 @@
   <% end %>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |g| %>
-    <%= g.hidden_field :email, value: 'guest@example.com' %>
+    <%= g.hidden_field :email, value: 'guest@example.jp' %>
     <%= g.hidden_field :password, value: '12345678' %>
     <div class="mb-3">
       <%= g.submit 'かんたんログイン', class: 'btn btn-warning' %>

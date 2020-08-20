@@ -1,7 +1,13 @@
 <% provide :title, 'フィード' %>
 
 <div class="container pt-4">
-  <%= render 'index_user_posts' %>
+  <div class="row">
+    <aside class="col-sm-4">
+      <%= render 'index_user_posts' %>
+    </aside>
+    <div class="col-sm-8">
+      <%= render 'index_feed', posts: @feed_posts %>
+    </div>
+  </div>
   
-  <%= render 'index_feed', posts: @feed_posts %>
 </div>
