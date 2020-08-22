@@ -20,29 +20,11 @@
               <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"><%= post.created_at.to_s(:datetime_jp) %></span>
             </div>
             <div>
-              <p class="mb-0"><%= post.content %></p>
+              <p class="mb-0"><%= simple_format(post.content) %></p>
             </div>
-            <div class ="d-flex flex-row">
-              <div>
-                <% if current_user == post.user %>
-                  <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
-                    <i class="far fa-trash-alt"></i> 
-                  <% end %>
-                <% end %>
-              </div>
-              <div class="ml-1">
-                <% if current_user.likes?(post) %>
-                  <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
-                    <%= hidden_field_tag :post_id, post.id %>
-                    <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                  <% end %>
-                <% else %>
-                  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
-                    <%= hidden_field_tag :post_id, post.id %>
-                    <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                  <% end %>
-                <% end %>
-              </div>
+            <div>
+              <span><%= "コメント#{post.comments.count}件" %></span>
+              <span><%= "いいね！#{post.favorites.count}件" %></span>
             </div>
           </div>
         </li>

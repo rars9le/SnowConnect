@@ -1,46 +1,37 @@
 <% if user_signed_in? %>
   <% if posts.any? %>
-    <ul class="list-unstyled">
+    <ul class="list-unstyled row post-cards">
       <% posts.each do |post| %>
-        <li class="media mb-3">
-          <% if post.user.avator? %>
-            <img class="mr-2 rounded icon" src='<%= post.user.avator %>' width="50px" height="50px" alt="ユーザーアイコン">
-          <% else %>
-            <image src="/assets/default.png" class=" mr-2 rounded icon" width="50px" height="50px" alt="ユーザーアイコン" %>
-          <% end %>
-          <div class="media-body">
-            <div>
-              <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"><%= post.created_at.to_s(:datetime_jp) %></span>
-            </div>
-            <div>
-              <p class="mb-0"><%= post.content %></p>
-            </div>
-            <div class ="d-flex flex-row">
-              <div>
-                <% if current_user == post.user %>
-                  <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
-                    <i class="far fa-trash-alt"></i> 
-                  <% end %>
-                <% end %>
-              </div>
-              <div class="ml-1">
-                <% if current_user.likes?(post) %>
-                  <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
-                    <%= hidden_field_tag :post_id, post.id %>
-                    <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                  <% end %>
+        <div class="col-md-8 border-top">
+          <div class="card border-0">
+            <div class="card-header bg-transparent border-0" >
+              <div class="post-user">
+                <% if post.user.avator? %>
+                  <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
                 <% else %>
-                  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
-                    <%= hidden_field_tag :post_id, post.id %>
-                    <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                  <% end %>
+                  <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
                 <% end %>
+                <%= link_to post.user.name, post.user %>
+              </div>
+              <div class="post-info">
+                <small><%= post.created_at.to_s(:datetime_jp) %></small>
               </div>
             </div>
+            <div class="card-body p-1">
+              <span><%= simple_format(post.content) %></span>
+              <div class="pt-2 pb-1">
+                <span><%= "コメント#{post.comments.count}件" %></span>
+                <span><%= "いいね！#{post.favorites.count}件" %></span>
+              </div>
+            </div>
+            <% if post.image? %>
+              <%= link_to image_tag(post.image.to_s, class: '', alt: 'post image'), post %>        
+            <% end %> 
           </div>
-        </li>
-      <% end %>
-      <%= paginate posts %>
+        </div>
+      <% end %> 
+
+    <%= paginate posts %>
     </ul>
 
     <!--%= render 'shared/infinitescroll' %-->

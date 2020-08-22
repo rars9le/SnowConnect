@@ -1,20 +1,27 @@
-<div class="text-center">
-  <h1>プロフィールを編集</h1>
-</div>
+<% provide :title, 'プロフィール編集' %>
 
-<div class="row">
-  <div class="col-sm-6 offset-sm-3">
+<div class="container user_form mt-3">
+  <%= render "shared/error_messages" %>
 
-    <%= form_with(model: @user, local: true) do |f| %>
-      <%= render 'layouts/error_messages', model: f.object %>
-      
-      <%= f.label :avator, 'プロフィール画像' %>
-      <div class="d-flex flex-row">
-        <%= image_tag @user.image_url(:thumb ) if @user.avator.present? %>
-        <div class="form-group d-flex flex-column-reverse m-3">
-          <%= f.file_field :avator %>
-        </div>
-      </div>
+  <h2 class="form_title">プロフィール編集</h2>
+
+    <%= form_for @user do |f| %>
+
+    <div class="text-center mb-3">
+      <%= f.label :avator do %>
+        <img id="avator_img_prev" src="#" class='hidden rounded-circle z-depth-0 mb-4' style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" alt="avator image"/>
+        <%= f.file_field :avator %>
+        <% if @user.avator? %>
+          <%= f.label :avator do %>
+            <%= image_tag(@user.avator.url, size: "200x200", class: "avator_present_img rounded-circle z-depth-0 avator-image", alt: "avator image") %>
+          <% end %>
+        <% else %>
+          <%= f.label :avator do %>
+            <%= image_tag("default.png", size: "200x200", class: "avator_present_img rounded-circle z-depth-0 avator-image", alt: "avator image") %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
 
       <div class="form-group">
         <%= f.label :name, '名前' %>
@@ -49,3 +56,24 @@
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#avator_img_prev').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#user_avator").change(function(){
+      $('#avator_img_prev').removeClass('hidden');
+      $('.avator_present_img').remove();
+      readURL(this);
+    });
+  });
+</script>

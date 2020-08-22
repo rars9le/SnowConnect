@@ -13,7 +13,10 @@
         <div>
           <p class="mb-0"><%= post.content %></p>
         </div>
-
+        <div>
+          <span><%= "コメント#{post.comments.count}件" %></span>
+          <span><%= "いいね！#{post.favorites.count}件" %></span>
+        </div>
       </div>
     </li>
   <% end %>

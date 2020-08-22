@@ -19,13 +19,13 @@
       <li class="nav-item">
         <%= header_link_item(icon('fa', 'heart') + ' 人気投稿', popular_posts_path) %>
       </li>
+      <li class="nav-item">
+        <%= header_link_item(icon('fas', 'search') + ' 検索', search_posts_path) %>
+      </li>
     </ul>
 
     <ul class="navbar-nav">
       <% if user_signed_in? %>
-        <li class="nav-item">
-          <%= header_link_item(icon('fas', 'search') + ' 検索', search_posts_path) %>
-        </li>
         <% if current_user.admin? %>
           <li class="nav-item">
             <%= header_link_item(icon('fas', 'users') + ' すべてのユーザー', users_path) %>
