@@ -26,9 +26,9 @@ class AvatorUploader < CarrierWave::Uploader::Base
   # Process files as they are uploaded:
   # process :scale => [200, 300]
   #上限変更
-  process :resize_to_limit => [256, 256]
+  # process :resize_to_limit => [256, 256]
   #JPGで保存
-  process :convert => 'jpg'
+  # process :convert => 'jpg'
   
   # def scale(width, height)
   #   # do something
@@ -47,17 +47,15 @@ class AvatorUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  #def filename
-  #  super.chomp(File.extname(super)) + '.jpg' 
-  #end
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
 
-  #日付で保存
-  #def filename
-  #  if original_filename.present?
-  #    time = Time.now
-  #    name = time.strftime('%Y%m%d%H%M%S') + '.jpg'
-  #    name.downcase
-  #  end
-  #end
+  protected
+
+  def secure_token
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) || model.instance_variable_set(var, SecureRandom.uuid)
+  end
 
 end

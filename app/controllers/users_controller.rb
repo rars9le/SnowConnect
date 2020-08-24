@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[index destroy]
+  before_action :set_snowstyle, :set_playstyle, only: %i[edit]
   
   def index
     @users = User.order(id: :desc).page(params[:page]).per(25)
@@ -32,17 +33,20 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @user_snow_style = User.where(id: @user.snow_style.split(','))
+    @user_play_style = User.where(id: @user.play_style.split(','))
   end
 
   def update
     @user = User.find(params[:id])
 
+    binding.pry
     if @user.update(user_params)
       flash[:success] = 'プロフィールが更新されました'
       redirect_to @user
     else
       flash.now[:danger] = 'プロフィールは更新されませんでした'
-      render :edit
+      redirect_to @user
     end
   end
 
@@ -70,6 +74,14 @@ class UsersController < ApplicationController
   #   counts(@user)
   # end
 
+  def set_snowstyle
+    @snowstyle = SNOWSTYLE
+  end
+
+  def set_playstyle
+    @playstyle = PLAYSTYLE
+  end
+
   def destroy
     @user.destroy
     flash[:success] = "ユーザー「#{@user.name}」は正常に削除されました"
@@ -79,7 +91,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :avator)
+    params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, snow_style:[], play_style:[])
   end
   
 end
