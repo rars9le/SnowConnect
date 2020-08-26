@@ -3,11 +3,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  before_save { self.email.downcase! }
+  before_save do
+    self.snow_style.gsub!(/[\[\]\"]/, "") if attribute_present?("snow_style")
+    self.play_style.gsub!(/[\[\]\"]/, "") if attribute_present?("play_style")
+  end
   mount_uploader :avator, AvatorUploader
   
   validates :name, presence: true, length: { maximum: 50 }
   validates :introduction, length: { maximum: 500 }
+  before_validation { self.email.downcase! }
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }

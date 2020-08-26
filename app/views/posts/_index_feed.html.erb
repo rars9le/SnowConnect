@@ -1,50 +1,35 @@
-<% if user_signed_in? %>
-  <% if posts.any? %>
-    <ul class="list-unstyled row post-cards">
-      <% posts.each do |post| %>
-        <div class="col-md-8 border-top">
-          <div class="card border-0">
-            <div class="card-header bg-transparent border-0" >
-              <div class="post-user">
-                <% if post.user.avator? %>
-                  <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-                <% else %>
-                  <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-                <% end %>
-                <%= link_to post.user.name, post.user %>
-              </div>
-              <div class="post-info">
-                <small><%= post.created_at.to_s(:datetime_jp) %></small>
-              </div>
-            </div>
-            <div class="card-body p-1">
-              <span><%= simple_format(post.content) %></span>
-              <div class="pt-2 pb-1">
-                <span><%= "コメント#{post.comments.count}件" %></span>
-                <span><%= "いいね！#{post.favorites.count}件" %></span>
-              </div>
-            </div>
-            <% if post.image? %>
-              <%= link_to image_tag(post.image.to_s, class: '', alt: 'post image'), post %>        
-            <% end %> 
+<ul class="list-unstyled row mx-auto post-cards d-flex flex-column">
+  <% posts.each do |post| %>
+    <div class="border-top">
+      <div class="card border-0">
+        <div class="card-header bg-transparent border-0" >
+          <div class="post-user">
+            <% if post.user.avator? %>
+              <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
+            <% else %>
+              <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
+            <% end %>
+            <%= link_to post.user.name, post.user %>
+          </div>
+          <div class="post-info">
+            <small><%= post.created_at.to_s(:datetime_jp) %></small>
           </div>
         </div>
-      <% end %> 
-
-    <%= paginate posts %>
-    </ul>
-
-    <!--%= render 'shared/infinitescroll' %-->
-
-  <% else %>
-    <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
-      <div class="no-contents-title font-weight-bold">投稿がありません</div>
-      <div class="no-contents-explanation text-center">あなた自身の投稿や、あなたがフォローしたユーザーの投稿がここに表示されます。</div>
+        <div class="card-body p-1">
+          <span><%= simple_format(post.content) %></span>
+          <div class="pt-2 pb-1">
+            <span><%= "コメント#{post.comments.count}件" %></span>
+            <span><%= "いいね！#{post.favorites.count}件" %></span>
+          </div>
+        </div>
+        <% if post.image? %>
+          <%= link_to image_tag(post.image.to_s, class: '', alt: 'post image'), post %>        
+        <% end %> 
+      </div>
     </div>
-  <% end %>
-<% else %>
-  <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
-    <div class="no-contents-title font-weight-bold">ログインしてください</div>
-    <div class="no-contents-explanation text-center">あなた自身の投稿や、あなたがフォローしたユーザーの投稿がここに表示されます。</div>
-  </div>
-<% end %>
+  <% end %> 
+
+<%= paginate posts %>
+</ul>
+
+<!--%= render 'shared/infinitescroll' %-->

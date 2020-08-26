@@ -1,5 +1,23 @@
 <% provide :title, '新着投稿' %>
 
 <div class="container pt-4">  
-  <%= render 'index_posts', posts: @posts %>
+  <div class="row mx-auto">
+    <div class="offset-sm-2 col-sm-8">
+      <% if user_signed_in? %>
+        <% if @posts.any? %>
+         <%= render 'index_feed', posts: @posts %>
+        <% else %>
+          <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+            <div class="no-contents-title font-weight-bold">投稿がありません</div>
+            <div class="no-contents-explanation text-center">新しい投稿がここに表示されます。</div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+          <div class="no-contents-title font-weight-bold">ログインしてください</div>
+          <div class="no-contents-explanation text-center">新しい投稿がここに表示されます。</div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

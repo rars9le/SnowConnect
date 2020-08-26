@@ -3,7 +3,21 @@
   <div class="row mt-2">
     <div class="col-sm-8 offset-2">
       <%= render 'timeline' %>
-      <%= render 'posts/index_feed', posts: @likes %>
+      <% if user_signed_in? %>
+        <% if @likes.any? %>
+         <%= render 'posts/index_feed', posts: @likes %>
+        <% else %>
+          <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+            <div class="no-contents-title font-weight-bold">投稿がありません</div>
+            <div class="no-contents-explanation text-center">いいね！した投稿がここに表示されます。</div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+          <div class="no-contents-title font-weight-bold">ログインしてください</div>
+          <div class="no-contents-explanation text-center">いいね！した投稿がここに表示されます。</div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -35,7 +35,7 @@
           <%= link_to icon('fas', 'user') + " #{current_user.name}さん", '#', class: "nav-link dropdown-toggle", id: "navbarDropdown", role: "button", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } %>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <%= link_to icon('fas', 'user') + ' マイページ', user_path(current_user), class: 'dropdown-item' %>
-            <%= link_to icon('fas', 'fa-cog') + ' 設定', settings_path(current_user), class: 'dropdown-item' %>
+            <%= link_to icon('fas', 'cog') + ' 設定', settings_path(current_user), class: 'dropdown-item' %>
             <%= link_to icon('fas', 'sign-out-alt') + ' ログアウト', logout_path, class: 'dropdown-item' %>
           </div>
         </li>

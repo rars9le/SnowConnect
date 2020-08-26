@@ -1,36 +1,34 @@
-<div class="row">
-  <div class="col-sm-6 offset-sm-3">
-    <%= form_tag(search_posts_path,:method => 'get') do %>
-      <div class="form-group">
-      <%= text_field_tag :search, '', placeholder: "キーワード検索" %>
-      <%= submit_tag '検索', class: 'btn btn-secondary', :name => nil %>
-      </div>
-    <% end %>
-    
-    <ul class="list-unstyled mt-3">
-      <% @posts.each do |post| %>
-        <li class="media mb-3">
-          <% if post.user.avator? %>
-            <img class="mr-2 rounded icon" src='<%=  post.user.avator %>' width="50px" height="50px" alt="ユーザーアイコン">
-          <% else %>
-            <image src="/assets/default.png" class=" mr-2 rounded icon" width="50px" height="50px" alt="ユーザーアイコン" %>
+<% provide :title, '投稿検索' %>
+
+  <div class="container pt-4">  
+    <div class="row mx-auto">
+      <div class="offset-sm-2 col-sm-8">
+          <%= search_form_for @q, url: search_posts_path, method: :get, local: true do |f| %>  
+            <div class="form-group d-flex flex-row">
+                <div class="col-sm-6">
+                  <%= f.search_field :content_cont, class: 'form-control', placeholder: '検索キーワードを入力してください' %>
+                </div>
+                <div class="col-sm-2">
+                  <%= f.submit '検索する', class: 'btn btn-primary form-control'%>
+                </div>
+            </div>
           <% end %>
-          <div class="media-body">
-            <div>
-              <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"><%= post.created_at.to_s(:datetime_jp) %></span>
+
+        <% if user_signed_in? %>
+          <% if @posts.any? %>
+          <%= render 'index_feed', posts: @posts %>
+          <% else %>
+            <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+              <div class="no-contents-title font-weight-bold">投稿がありません</div>
+              <div class="no-contents-explanation text-center">新しい投稿がここに表示されます。</div>
             </div>
-            <div>
-              <p class="mb-0"><%= simple_format(post.content) %></p>
-            </div>
-            <div>
-              <span><%= "コメント#{post.comments.count}件" %></span>
-              <span><%= "いいね！#{post.favorites.count}件" %></span>
-            </div>
+          <% end %>
+        <% else %>
+          <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+            <div class="no-contents-title font-weight-bold">ログインしてください</div>
+            <div class="no-contents-explanation text-center">新しい投稿がここに表示されます。</div>
           </div>
-        </li>
-      <% end %>
-      <%= paginate @posts %>
-    </ul>
-    
+        <% end %>
+      </div>
+    </div>
   </div>
-</div>
