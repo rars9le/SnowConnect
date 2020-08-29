@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[index destroy]
   before_action :set_snowstyle, :set_playstyle, only: %i[edit]
-  
+  before_action :admin_user, only: :destroy
+
   def index
-    @users = User.order(id: :desc).page(params[:page]).per(25)
+    @users = User.order(id: :desc).page(params[:page]).per(PER)
   end
   
   def show
@@ -33,8 +34,12 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    @user_snow_style = User.where(id: @user.snow_style.split(','))
-    @user_play_style = User.where(id: @user.play_style.split(','))
+    unless @user.snow_style.nil?
+      @user_snow_style = User.where(id: @user.snow_style.split(','))
+    end
+    unless @user.play_style.nil?
+      @user_play_style = User.where(id: @user.play_style.split(','))
+    end
   end
 
   def update
@@ -47,6 +52,24 @@ class UsersController < ApplicationController
       flash.now[:danger] = 'プロフィールは更新されませんでした'
       redirect_to @user
     end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:success] = "ユーザー「#{@user.name}」は正常に削除されました"
+    redirect_to users_path
+  end
+
+  def confirmWithdrawal
+    @user = User.find(params[:id])
+  end
+
+  def withdrawal
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:success] = "退会しました"
+    redirect_to root_path
   end
 
   # def followings
@@ -81,16 +104,14 @@ class UsersController < ApplicationController
     @playstyle = PLAYSTYLE
   end
 
-  def destroy
-    @user.destroy
-    flash[:success] = "ユーザー「#{@user.name}」は正常に削除されました"
-    redirect_to users_path
-  end
-
   private
 
   def user_params
     params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, snow_style:[], play_style:[])
   end
   
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
+
 end

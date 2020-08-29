@@ -24,10 +24,12 @@
       <%= f.text_field :name, class: 'form-control' %>
     </div>
 
-    <div class="form-group">
-      <%= f.label :email, 'メールアドレス' %>
-      <%= f.email_field :email, class: 'form-control' %>
-    </div>
+    <%unless @user.guest? %>
+      <div class="form-group">
+        <%= f.label :email, 'メールアドレス' %>
+        <%= f.email_field :email, class: 'form-control' %>
+      </div>
+    <% end %>
 
     <div class="form-group">
       <%= f.label :age, '年齢' %>
@@ -84,24 +86,23 @@
       <%= f.text_area :introduction, class: 'form-control' %>
     </div>
 
-      <%
-=begin%>
-<div class="form-group">
-        <%= f.label :password, 'パスワード' %>
+    <%unless @user.guest? %>
+      <div class="form-group">
+        <%= f.label :password, 'パスワード(変更する場合)' %>
         <%= f.password_field :password, class: 'form-control' %>
       </div>
 
       <div class="form-group">
         <%= f.label :password_confirmation, 'パスワード(再入力)' %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div> 
-<%
-=end%>
-      
-    <div class="d-flex justify-content-center">
+      </div>
+    <% end %>
+
+    <div class="d-flex justify-content-center mt-2">
       <%= link_to '戻る', user_path(@user.id), class: 'btn btn-secondary mr-4' %>
       <%= f.submit '更新', class: 'btn btn-secondary ' %>
-    </div>      
+    </div>    
+
   <% end %>
   
 </div>

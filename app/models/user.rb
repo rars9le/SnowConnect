@@ -16,16 +16,16 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   
   has_many :likes, through: :favorites, source: :post
   
   has_many :relationships
-  has_many :followings, through: :relationships, source: :follow
+  has_many :followings, through: :relationships, source: :follow, dependent: :destroy
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
-  has_many :followers, through: :reverses_of_relationship, source: :user
-  has_many :favorites
+  has_many :followers, through: :reverses_of_relationship, source: :user, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   enum sex: { man: 0, woman: 1}
   

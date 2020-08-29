@@ -16,10 +16,18 @@
         <strong><%= @user.name %></strong>
       </div>
       <div class="border-bottom p-2">
-        <strong>性別</strong><%= @user.sex == "man" ? " 男性" : " 女性" %>
+        <%if @user.sex_open_range == 1 %>
+          <strong>性別</strong><%= @user.sex == "man" ? " 男性" : " 女性" %>
+        <% else %>
+          <strong>性別 </strong>非公開
+        <% end %>
       </div>
       <div class="border-bottom p-2">
-        <strong>年齢</strong><%=" #{@user.age}歳"%>
+        <%if @user.age_open_range == 1 %>
+          <strong>年齢</strong><%=" #{@user.age}歳"%>
+        <% else %>
+          <strong>年齢 </strong>非公開
+        <% end %>
       </div>
       <div class="border-bottom p-2">
         <strong>スタイル</strong><%=" #{@user.snow_style} #{@user.play_style}"%>

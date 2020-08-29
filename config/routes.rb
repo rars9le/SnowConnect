@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
 
-  resources :settings, only: [:index]
-
   resources :users, only: [:index, :show, :edit, :update, :destroy] do
     member do
       get :followings
       get :followers
       get :likes
+      get :confirm_withdrawal
+      delete :withdrawal
     end
   end
-  
+
   devise_for :users,
     path: '',
     path_names: {
