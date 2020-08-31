@@ -27,7 +27,7 @@ class PostsController < ApplicationController
 
   def feed
     return unless user_signed_in?
-
+    @post = Post.new(flash[:post])
     @feed_posts = current_user.feed_posts.page(params[:page]).per(PER)
     @feed_posts = @feed_posts.includes(:user)
   end
@@ -46,7 +46,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.permit(:content)
+    params.require(:post).permit(:content, :image)
   end
 
   def correct_user

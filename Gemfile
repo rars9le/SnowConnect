@@ -54,7 +54,6 @@ end
 # ---- 以下追加 ----
 group :production do
   gem 'pg', '>= 0.18', '< 2.0'
-  gem 'fog', '1.42'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -67,6 +66,7 @@ gem "jquery-ui-rails"
 gem 'kaminari'
 gem 'carrierwave',  '0.10.0'
 gem 'mini_magick', '>= 4.9.4'
+gem 'fog'
 gem 'font-awesome-sass', '~> 5.4.1'
 gem 'devise'
 gem 'rails-i18n'

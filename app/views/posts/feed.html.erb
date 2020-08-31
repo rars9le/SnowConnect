@@ -8,7 +8,7 @@
     <div class="col-sm-8">
       <% if user_signed_in? %>
         <% if @feed_posts.any? %>
-         <%= render 'index_feed', posts: @feed_posts %>
+          <%= render 'index_feed', posts: @feed_posts %>
         <% else %>
           <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
             <div class="no-contents-title font-weight-bold">投稿がありません</div>

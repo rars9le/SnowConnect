@@ -84,6 +84,8 @@ node_modules/
 /public/packs
 /public/packs-test
 /public/assets
+# アップロードされたテスト画像を無視する
+/public/uploads
 
 # Ignore yarn files
 /yarn-error.log

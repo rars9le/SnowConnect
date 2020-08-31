@@ -1,10 +1,15 @@
 # encoding: utf-8
 
-class AvatorUploader < CarrierWave::Uploader::Base
+class ImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
+  # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  # include CarrierWave::MiniMagick
+
+  # ファイルサイズを制限
+  def size_range
+    1..5.megabytes
+  end
 
   # Choose what kind of storage to use for this uploader:
   if Rails.env.production?
@@ -20,21 +25,17 @@ class AvatorUploader < CarrierWave::Uploader::Base
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  def default_url(*args)
-  #   For Rails 3.1+ asset pipeline compatibility:
-    ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  # def default_url
+  #   # For Rails 3.1+ asset pipeline compatibility:
+  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  #
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  end
+  # end
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
-  #上限変更
-  # process :resize_to_limit => [256, 256]
-  process resize_to_fill: [500, 500, 'Center']
-  
-  #JPGで保存
-  # process :convert => 'jpg'
-  
+  process :resize_to_limit => [400, 400]
+  # process resize_to_fill: [500, 500, 'Center']
   # def scale(width, height)
   #   # do something
   # end

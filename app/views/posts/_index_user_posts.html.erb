@@ -1,10 +1,35 @@
 <%= render "shared/success_messages" %>
 
 <% if user_signed_in? %>
-  <%= form_with(model: @post, local: true) do |f| %>
+  <%= form_with model: @post do |f| %>
     <div class="form-group">
       <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
+    </div>
+    <div class="text-center mb-3">
+      <img id="post_img_prev" src="#" class='hidden mb-4 img_preview' alt="post image"/>
+      <%= f.file_field :image %>
     </div>
     <%= f.submit '投稿', class: 'btn btn-secondary btn-block' %>
   <% end %>
 <% end %>
+
+<script type="text/javascript">
+  $(function() {
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#post_img_prev').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#post_image").change(function(){
+      $('#post_img_prev').removeClass('hidden');
+      $('.post_present_img').remove();
+      readURL(this);
+    });
+  });
+</script> 
