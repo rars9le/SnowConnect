@@ -102,3 +102,6 @@ yarn-debug.log*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# 環境変数を無視する
+.env
