@@ -17,13 +17,19 @@
         </div>
         <div class="card-body p-2">
           <span><%= simple_format(post.content) %></span>
+          <% if post.image? %>
+            <% if post.image.file.content_type.to_s.include?('image/') %>
+              <%= link_to post.image.url, "data-lightbox": post.image do %>
+                <%= image_tag(post.image.url(:thumb), alt: 'post image') %>
+              <% end %>
+            <% else %>
+                <%= video_tag post.image.url, width: "468", height: "260", controls: true, autobuffer: true %>  
+            <% end %>
+          <% end %> 
           <div class="pt-2 pb-1">
             <span><%= "コメント#{post.comments.count}件" %></span>
             <span><%= "いいね！#{post.favorites.count}件" %></span>
           </div>
-          <% if post.image? %>
-            <%= image_tag(post.image.to_s, class: '', alt: 'post image') %>        
-          <% end %> 
         </div>
 
       </div>

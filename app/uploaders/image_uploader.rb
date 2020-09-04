@@ -1,10 +1,10 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
-
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+  require 'streamio-ffmpeg'
 
   # ファイルサイズを制限
   def size_range
@@ -30,8 +30,13 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
-  process :resize_to_limit => [400, 400]
-  # process resize_to_fill: [500, 500, 'Center']
+  version :thumb, if: :is_image?
+
+  version :thumb do
+    process :resize_to_limit => [468, 260]
+  end
+
+    # process resize_to_fill: [500, 500, 'Center']
   # def scale(width, height)
   #   # do something
   # end
@@ -44,7 +49,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w(jpg jpeg gif png mp4 MOV wmv)
   end
 
   # Override the filename of the uploaded files:
@@ -58,6 +63,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   def secure_token
     var = :"@#{mounted_as}_secure_token"
     model.instance_variable_get(var) || model.instance_variable_set(var, SecureRandom.uuid)
+  end
+
+  private
+
+  def is_image? image
+    image.content_type.to_s.include?("image/")
   end
 
 end
