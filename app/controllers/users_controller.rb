@@ -72,29 +72,29 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  # def followings
-  #   @user = User.find(params[:id])
-  #   @followings = @user.followings.page(params[:page])
-  #   counts(@user)
-  # end
+  def followings
+    @user = User.find(params[:id])
+    @followings = @user.followings.page(params[:page])
+    counts(@user)
+  end
   
-  # def followers
-  #   @user = User.find(params[:id])
-  #   @followers = @user.followers.page(params[:page])
-  #   counts(@user)
-  # end
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers.page(params[:page])
+    counts(@user)
+  end
 
-  # def likes
-  #   @user = User.find(params[:id])
-  #   @likes = @user.likes.page(params[:page])
-  #   counts(@user)
-  # end
+  def likes
+    @user = User.find(params[:id])
+    @likes = @user.likes.page(params[:page])
+    counts(@user)
+  end
   
-  # def favoriters
-  #   @user = User.find(params[:id])
-  #   @favoriters = @user.favoriters.page(params[:page])
-  #   counts(@user)
-  # end
+  def favoriters
+    @user = User.find(params[:id])
+    @favoriters = @user.favoriters.page(params[:page])
+    counts(@user)
+  end
 
   def set_snowstyle
     @snowstyle = SNOWSTYLE

@@ -23,7 +23,7 @@
                 <%= image_tag(post.image.url(:thumb), alt: 'post image') %>
               <% end %>
             <% else %>
-                <%= video_tag post.image.url, width: "468", height: "260", controls: true, autobuffer: true %>  
+                <%= video_tag post.image.url, width: "468", height: "260", controls: true %>  
             <% end %>
           <% end %> 
           <div class="pt-2 pb-1">

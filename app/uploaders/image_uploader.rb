@@ -4,8 +4,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  require 'streamio-ffmpeg'
-
+  
   # ファイルサイズを制限
   def size_range
     1..5.megabytes
