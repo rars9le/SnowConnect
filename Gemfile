@@ -41,6 +41,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # ---- 以下追加 ----
+  gem 'bullet'
 end
 
 group :test do
@@ -73,3 +75,6 @@ gem 'rails-i18n'
 gem 'pry-rails'  
 gem 'ransack'
 gem 'dotenv-rails'
+
+gem 'hirb'
+gem 'hirb-unicode'

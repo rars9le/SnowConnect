@@ -12,7 +12,7 @@ class Post < ApplicationRecord
 
   #Like検索,ない場合は全てを返す
   def self.search(search)
-    return Post.all unless search
+    return Post.includes(:user) unless search
     Post.where(['content LIKE ?', "%#{search}%"])
   end
   

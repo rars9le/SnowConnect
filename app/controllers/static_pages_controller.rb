@@ -5,8 +5,7 @@ class StaticPagesController < ApplicationController
     else
       redirect_to posts_path
     end
-    #@post = current_user.posts.build
-    #@posts = current_user.feed_posts.order(id: :desc).page(params[:page])
+
   end
 end
 

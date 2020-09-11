@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :set_target_post, only: %i[destroy]
   before_action :correct_user, only: [:destroy]
 
   def index
@@ -29,11 +30,10 @@ class PostsController < ApplicationController
     return unless user_signed_in?
     @post = Post.new(flash[:post])
     @feed_posts = current_user.feed_posts.page(params[:page]).per(PER)
-    @feed_posts = @feed_posts.includes(:user)
+    @feed_posts = @feed_posts.includes(:user, :favorites, :comments)
   end
 
   def popular   
-    #@popular_posts = Post.all.order('count(favorites.user_id) desc').page(params[:page]).per(PER)
     @popular_posts = Post.unscoped.joins(:favorites).group(:post_id).order('count(favorites.user_id) desc').page(params[:page]).per(PER)
     @popular_posts = @popular_posts.includes(:user)
   end
@@ -50,7 +50,11 @@ class PostsController < ApplicationController
   end
 
   def correct_user
-    redirect_to(root_url) unless (@post.user == current_user)
+    redirect_to(root_url) unless (@post.user == current_user) || current_user.admin?
+  end
+
+  def set_target_post
+    @post = Post.find(params[:id])
   end
 
 end
