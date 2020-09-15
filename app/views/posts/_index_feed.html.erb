@@ -28,24 +28,24 @@
           <% end %> 
           <div class="pt-2 pb-1">
             <span class="btn">
-              <% if post.comments.any? %>
-                <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, :class =>"btn btn-default btn-sm" %>
-                <%= "#{post.comments.count}" %>
-              <% else %>
-                <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, :class =>"btn btn-default btn-sm" %>
+                <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-default btn-sm", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}" %>
+                <% if post.comments.any? %>
+                  <%= "#{post.comments.count}" %>
               <% end %>
             </span>
             <span class="btn">
-              <% if current_user.likes?(post) %>
-                <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
-                  <%= hidden_field_tag :post_id, post.id %>
-                  <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                  <%= "#{post.favorites.count}" %>
-                <% end %>
-              <% else %>
-                <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
-                  <%= hidden_field_tag :post_id, post.id %>
-                  <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
+              <% if user_signed_in? %>
+                <% if current_user.likes?(post) %>
+                  <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
+                    <%= hidden_field_tag :post_id, post.id %>
+                    <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
+                    <%= "#{post.favorites.count}" %>
+                  <% end %>
+                <% else %>
+                  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
+                    <%= hidden_field_tag :post_id, post.id %>
+                    <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
+                  <% end %>
                 <% end %>
               <% end %>
             </span>
@@ -57,6 +57,14 @@
               <% end %>
             </span>
           </div>
+          <% if user_signed_in? %>
+            <%= content_tag(:div, :class => 'collapse', :id => "comment_form_#{post.id}") do %>
+              <%= render partial: 'comments/form', locals: {comment: comment, post: post} %>
+              <% if post.comments.any? %>
+                <%= render post.comments.includes(:user) %>
+              <% end %>
+            <% end %>
+          <% end %>
         </div>
 
       </div>
@@ -65,5 +73,3 @@
 
 <%= paginate posts %>
 </ul>
-
-<!--%= render 'shared/infinitescroll' %-->

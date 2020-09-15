@@ -13,67 +13,6 @@
   max-width: 50%;
 }
 
-.card-post {
-  max-width: 600px;
-}
-
-.col-right, .post-right {
-  margin-top: 1rem;
-  @include md {
-    margin-top: 0;
-  }
-}
-
-.add_image {
-  border: black 4px dashed;
-  width: 100%;
-  margin-top: 10px;
-  height: 380px;
-  line-height: 460px;
-  border-radius: 10px;
-  cursor: pointer;
-  @include lg {
-    margin-top: 0px;
-    height: 500px;
-    line-height: 550px;
-  }
-  i {
-    font-size: 120px;
-  }
-  p {
-    font-size: 12px;
-  }
-}
-
-.custom-file-input {
-  height: 0;
-}
-
-#img_field {
-  color: #666;
-  position: relative;
-  padding: 0;
-  cursor: pointer;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: #fff;
-  overflow: hidden;
-  box-sizing: border-box;
-  transition: 0.3s ease-out;
-  &:hover {
-    background-color: #EDBC6C;
-    & i{
-      color: #fff;
-    }
-  }
-  img {
-    vertical-align: initial;
-    width: inherit;
-    height: inherit;
-  }
-}
-
 .card-header {
   padding: 5px;
   a {
@@ -88,60 +27,9 @@
 .post-info {
   text-align: right;
 }
-.card-footer {
-  div {
-    font-size: 0.9rem;
-    color: rgba(0, 0, 0, 0.5);
-    span:first-child {
-      margin-right: 10px;
-    }
-  }
-}
 
 .user_avator {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-}
-
-.post-table{
-  border-collapse: separate;
-  border-spacing: 2px;
-  width: 100%;
-  th, td {
-    border-radius: calc(0.25rem - 1px);
-    padding: 10px 0;
-  }
-  th {
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.12);
-  }
-  td {
-    background-color: rgba(0, 0, 0, 0.07);
-    padding-left: 7px;
-  }
-}
-
-/* 隠し表示用 */
-div.PhotoBox {
-  position: relative;
-  overflow: hidden;
-}
-div.PhotoBox div.SlideBox {
-  position: absolute;
-  left: 0px;
-  bottom: -70px;              /* 画像の高さに合わせる */
-  width: 100%;                /* 画像の横幅に合わせる */
-  height: 70px;               /* スライドして重ねる領域の高さ */
-  background-color: black;  /* スライドして重ねる領域の背景色 */
-  color: white;             /* スライドして重ねる領域の文字色 */
-  opacity: 0.6;               /* スライドして重ねる領域の透明度 */
-}
-div.PhotoBox div.SlideBox p.Caption {
-  font-weight: bold;
-  font-size: 90%;
-  margin: 0.5em;
-}
-div.SlideBox p {
-  padding-left: 5px;
 }

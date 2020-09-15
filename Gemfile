@@ -42,6 +42,10 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # ---- 以下追加 ----
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  # N+1を検知した場合に警告
   gem 'bullet'
 end
 
@@ -72,7 +76,6 @@ gem 'fog-aws'
 gem 'font-awesome-sass', '~> 5.4.1'
 gem 'devise'
 gem 'rails-i18n'
-gem 'pry-rails'  
 gem 'ransack'
 gem 'dotenv-rails'
 

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
-  before_action :set_target_post, only: %i[destroy]
+  before_action :set_target_post, only: [:destroy]
   before_action :correct_user, only: [:destroy]
 
   def index
@@ -29,6 +29,7 @@ class PostsController < ApplicationController
   def feed
     return unless user_signed_in?
     @post = Post.new(flash[:post])
+    @comment = Comment.new(flash[:comment])
     @feed_posts = current_user.feed_posts.page(params[:page]).per(PER)
     @feed_posts = @feed_posts.includes(:user, :favorites, :comments)
   end
