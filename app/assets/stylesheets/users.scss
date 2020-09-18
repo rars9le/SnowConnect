@@ -15,3 +15,20 @@
 .btn {
   display: inline-block;
 }
+
+.card-index {
+  margin: 0px 0;
+}
+
+.search-user-card {
+  background-color: rgba(0,0,0,0.1);
+  padding: 10px;
+  min-height: 100px;
+  .user-name {
+    margin: 15px auto 10px auto;
+    text-decoration: none;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}

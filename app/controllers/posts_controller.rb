@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.page(params[:page]).per(PER)
-    @posts = @posts.includes(:user)
+    @posts = @posts.includes(:user, :comments)
   end
 
   def create
@@ -31,17 +31,13 @@ class PostsController < ApplicationController
     @post = Post.new(flash[:post])
     @comment = Comment.new(flash[:comment])
     @feed_posts = current_user.feed_posts.page(params[:page]).per(PER)
-    @feed_posts = @feed_posts.includes(:user, :favorites, :comments)
+    @feed_posts = @feed_posts.includes(:user, :comments)
   end
 
   def popular   
+    @comment = Comment.new(flash[:comment])
     @popular_posts = Post.unscoped.joins(:favorites).group(:post_id).order('count(favorites.user_id) desc').page(params[:page]).per(PER)
     @popular_posts = @popular_posts.includes(:user)
-  end
-
-  def search
-    @q = Post.ransack(params[:q])
-    @posts = @q.result(distinct: true).page(params[:page])
   end
 
   private

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[index destroy]
-  before_action :set_snowstyle, :set_playstyle, only: %i[edit]
-  before_action :admin_user, only: :destroy
+  before_action :set_snowstyle, :set_playstyle, only: %i[edit search]
+  before_action :admin_user, only: [:destroy]
 
   def index
     @users = User.order(id: :desc).page(params[:page]).per(PER)
@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.includes(:user).order(id: :desc).page(params[:page])
+    @posts = @user.posts.includes(:comments).order(id: :desc).page(params[:page])
     @followings = @user.followings.page(params[:page])
     @followers = @user.followers.page(params[:page])
     @like_posts = @user.like_posts.includes(:user)
@@ -103,10 +103,20 @@ class UsersController < ApplicationController
     @playstyle = PLAYSTYLE
   end
 
+  def search
+    @comment = Comment.new(flash[:comment])
+    @q = User.ransack(params[:q])
+    @users = @q.result.page(params[:page])
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, snow_style:[], play_style:[])
+  end
+
+  def search_params
+    params.permit(:name_cont, :sex_eq, :age_qteq, :age_ltq, :home_gelande_cont, :snow_style_cont, :play_style_cont)
   end
   
   def admin_user

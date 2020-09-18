@@ -3,7 +3,7 @@ module ApplicationHelper
 
   # CheckBoxのアイテムを定義
   SNOWSTYLE = %w[スキーヤー スノーボーダー].freeze
-  PLAYSTYLE = %w[フリーラン ワンメイク ジブ ハーフパイプ パウダー バックカントリー アルペン].freeze
+  PLAYSTYLE = %w[フリーラン ワンメイク ジブ バックカントリー ハーフパイプ パウダー アルペン].freeze
 
   def full_title(page_title = '')
     base_title = WEBSITE_NAME

@@ -33,3 +33,11 @@
   height: 50px;
   border-radius: 50%;
 }
+
+.nav {
+  list-style: none;
+}
+
+.nav-link.active {
+  border-bottom: 3px solid #ff6600;
+}

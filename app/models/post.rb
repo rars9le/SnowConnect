@@ -9,11 +9,5 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   default_scope -> { order(created_at: :DESC) }
-
-  #Like検索,ない場合は全てを返す
-  def self.search(search)
-    return Post.includes(:user) unless search
-    Post.where(['content LIKE ?', "%#{search}%"])
-  end
   
 end

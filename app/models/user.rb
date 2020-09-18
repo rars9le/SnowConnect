@@ -17,7 +17,6 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
 
   has_many :posts, dependent: :destroy
-  has_many :comments, dependent: :destroy
   
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow, dependent: :destroy
@@ -66,4 +65,10 @@ class User < ApplicationRecord
     Post.where(user_id: self.following_ids + [self.id])
   end
   
+  #Like検索,ない場合は全てを返す
+  def self.search(search)
+    return Post.includes(:user) unless search
+    Post.where(['content LIKE ?', "%#{search}%"])
+  end
+
 end

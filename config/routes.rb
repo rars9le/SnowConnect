@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get :confirm_withdrawal
       delete :withdrawal
     end
+    collection do
+      get :search
+    end
   end
 
   devise_for :users,
@@ -32,7 +35,6 @@ Rails.application.routes.draw do
   
   resources :posts do
     collection do
-      get :search
       get :feed
       get :popular
     end

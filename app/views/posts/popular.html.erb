@@ -4,7 +4,7 @@
   <div class="row mx-auto">
     <div class="offset-sm-2 col-sm-8">
         <% if @popular_posts.any? %>
-          <%= render 'index_feed', posts: @popular_posts %>
+          <%= render partial: 'index_feed', locals: { posts: @popular_posts, comment: @comment} %>
         <% else %>
           <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
             <div class="no-contents-title font-weight-bold">投稿がありません</div>
