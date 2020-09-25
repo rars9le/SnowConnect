@@ -25,6 +25,9 @@ class User < ApplicationRecord
   
   has_many :favorites, dependent: :destroy
   has_many :like_posts, through: :favorites, source: :post
+  has_many :messages
+  has_many :entries
+  has_many :rooms, through: :entries
   
   enum sex: { man: 0, woman: 1}
   

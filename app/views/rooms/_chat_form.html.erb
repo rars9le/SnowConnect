@@ -1,0 +1,8 @@
+<% if user_signed_in? %>
+  <%= form_with model: @message do |f|  %>
+    <%= f.text_area :content, class: 'textarea' %>
+    <%= f.submit value: "送信" %>
+  <% else %>
+    <div>チャットをするにはログインして下さい。</div>
+  <% end %>
+<% end %>

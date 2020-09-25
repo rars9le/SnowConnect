@@ -37,7 +37,7 @@ class PostsController < ApplicationController
   def popular   
     @comment = Comment.new(flash[:comment])
     @popular_posts = Post.unscoped.joins(:favorites).group(:post_id).order('count(favorites.user_id) desc').page(params[:page]).per(PER)
-    @popular_posts = @popular_posts.includes(:user)
+    @popular_posts = @popular_posts.includes(:user, :comments)
   end
 
   private

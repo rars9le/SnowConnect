@@ -44,7 +44,8 @@ Rails.application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
   resources :favorites, only: [:create, :destroy]
-
-  resources :comments, only: %i[create destroy]
+  resources :comments, only: [:create, :destroy]
+  resources :rooms, only: [:index, :create, :show]
+  resources :messages, only: [:create, :edit, :update, :destroy]
 
 end
