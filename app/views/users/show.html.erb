@@ -46,9 +46,11 @@
           <% else %>
             <% if current_user.id == @user.id %>
               <%= link_to 'プロフィール編集', edit_user_path(current_user), class:'btn btn-outline-dark' %>
-              <%= render 'contact' %>
             <% else %>
-              <%= render 'follow_area', user: @user %>
+              <div class="d-flex flex-row">
+                <%= render 'follow_area', user: @user %>
+                <%= render 'contact' %>
+              </div>
             <% end %>
           <% end %>
         <% end %>

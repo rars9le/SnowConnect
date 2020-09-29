@@ -46,6 +46,6 @@ Rails.application.routes.draw do
   resources :favorites, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
   resources :rooms, only: [:index, :create, :show]
-  resources :messages, only: [:create, :edit, :update, :destroy]
+  resources :messages, only: [:create, :destroy]
 
 end

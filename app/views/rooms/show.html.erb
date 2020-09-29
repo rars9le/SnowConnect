@@ -1,6 +1,16 @@
-<div class="div" id="chat_area">
-  <%= render "chat_area" %>
-</div>
-<div class="div" id="chat_form">
-  <%= render "chat_form" %>
+<% provide :title, 'チャットルーム' %>
+
+<div class="container mt-3">
+  <div class="row mx-auto">
+    <div class="offset-sm-2 col-sm-8">
+      <h2 class="form_title">チャットルーム</h2>
+      <div id="chat_area">
+        <%= render 'chat_area' %>
+      </div>
+
+      <div id="chat_form">
+        <%= render 'chat_form', room: @room %>
+      </div>
+    </div>
+  </div>
 </div>

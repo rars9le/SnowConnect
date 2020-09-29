@@ -1,44 +1,36 @@
-<div class='left-button'></div>
-
-<h4 class='rooms-title'>気になる同士</h4>
-
-<% @entries.each do |e| %>
-  <div class="user-name">
-    <strong>
-      <%= image_tag "#{e.user.avatar}", class:"avatar" %>
-      <%= link_to '#{e.user.id}', "/users/#{e.user.id}" class="rooms-user-link" %>
-        <%= e.user.name %>
-      </a>
-    </strong>
-  </div>
+<% @entries.each do |entry| %>
+  <strong>
+    <% if entry.user.avator? %>
+      <%= image_tag(entry.user.avator.to_s, class: 'user_avator', alt: 'avator image') %>
+    <% else %>
+      <%= image_tag('default.png', class: 'user_avator', alt: 'avator image') %>
+    <% end %>
+    <%= link_to entry.user.name, "/users/#{entry.user.id}", class:"rooms-user-link" %>
+  </strong>
 <% end %>
 <hr/>
-<div class="chats">
-  <div class="chat__scroll">
-    <% if @messages.present? %>
-      <% @messages.each do |m| %>
-        <div id="message_#{m.id}">
-          <div class="chatbox">
-            <div class="chat-face1">
-              <%= image_tag "#{m.user.avatar}", class:"avatar" %>
-              <div class="chat-hukidashi"></div>
-              <%= m.user.name %>
-              <br/>
-              <%= m.message %>
-              <br/>
-              <%= m.created_at.strftime("%Y-%m-%d %H:%M") %>
-              <%= form_with(model: @message, url: edit_message_path(m.id), remote: true, method: :get) do |f| %>
-                <%= f.hidden_field :room_id, value: @room.id %>
-                <%= f.submit "編集" %>
-              <% end %>
-              <%= form_with(model: @message, url: message_path(m.id), remote: true, method: :delete) do |f| %>
-                <%= f.hidden_field :room_id, value: @room.id %>
-                <%= f.submit "削除" %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+
+<% if @messages.present? %>
+  <% @messages.each do |message| %>
+    <div id="message_#{message.id}">
+      <span>
+        <% if message.user.avator? %>
+          <%= image_tag(message.user.avator.to_s, class: 'user_avator', alt: 'avator image') %>
+        <% else %>1
+          <%= image_tag('default.png', class: 'user_avator', alt: 'avator image') %>
+        <% end %>
+        <%= message.user.name %>
+      </span>
+      <br/>
+      <%= message.message %>
+      <%= message.created_at.to_s(:datetime_jp) %>
+      <div class="mt-2 mb-2">
+        <%= form_with(model: @message, url: message_path(message.id), method: :delete) do |f| %>
+          <%= f.hidden_field :room_id, value: @room.id %>
+          <%= f.submit "削除", class: 'btn btn-primary btn-sm' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<hr/>

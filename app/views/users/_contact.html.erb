@@ -1,14 +1,12 @@
-<% if user_signed_in? %>
-  <% unless @user.id == current_user.id %>
-    <% if @haveRoom == true %>
-      <%= link_to "ダイレクトメッセージ", room_path(@roomId) %>
-    <% else %>
-      <%= form_with(model:@room, local: true) do |f| %>
-        <%= fields_for @entry do |e| %>
-          <%= e.hidden_field :user_id, value: @user.id %>
-        <% end %>
-        <%= f.submit "ダイレクトメッセージ" %>
+<div class="ml-1">
+  <% if @haveRoom == true %>
+    <%= link_to "ダイレクトメッセージ", room_path(@roomId) %>
+  <% else %>
+    <%= form_with(model:@room, local: true) do |f| %>
+      <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, value: @user.id %>
       <% end %>
+      <%= f.submit "ダイレクトメッセージ", class: 'btn btn-primary btn-sm'%>
     <% end %>
   <% end %>
-<% end %>
+</div>
