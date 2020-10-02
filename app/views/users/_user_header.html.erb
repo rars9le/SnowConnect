@@ -4,7 +4,7 @@
       <% if @user.avator? %>
         <img src='<%=  @user.avator %>' class="icon" alt="ユーザーアイコン">
       <% else %>
-        <image src="/assets/default.png" class="icon" alt="ユーザーアイコン" %>
+        <img src="/assets/default.png" class="icon" alt="ユーザーアイコン" %>
       <% end %>
       <div class="mt-2">
         <%= render 'relationships/follow_button', user: @user %>

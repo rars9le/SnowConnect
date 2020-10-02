@@ -1,3 +1,60 @@
 // Place all the styles related to the rooms controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// .users {
+//   margin: 0;
+//   li {
+//     overflow: auto;
+//     padding: 10px 0;
+//     border-bottom: 1px solid rgba(#EEEEEE,1.0);
+//   }
+// }
+
+.feed-circle {
+  text-align: left;
+  border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
+  width: 50px;  /* 縦横を同じ値にする */
+  height: 50px;  /* 縦横を同じ値にする */
+  object-fit: cover; /* 縦横比固定したまま上2つの縦横の範囲内に収まるように配置する */
+  border: 1px solid #e8e8e8;
+}
+
+.tc-b {
+  color:#111111;
+}
+
+p {
+  margin: 0;
+}
+
+.users a{
+  text-decoration: none;
+}
+
+.link-box:hover {
+  opacity: 0.5;
+}
+
+.chat-message span{
+  color: gray;
+  font-size: 0.8rem;
+}
+
+.chat-delete{
+  margin-left: auto;
+}
+
+.del-icon{
+  text-decoration: none;
+  border-style: none;
+  background-color: white;
+}
+
+.chat-area:hover {
+  background-color: #EEEEEE;
+}
+
+.chat-area:hover input{
+  background-color: #EEEEEE;
+}

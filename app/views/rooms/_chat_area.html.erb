@@ -12,22 +12,27 @@
 
 <% if @messages.present? %>
   <% @messages.each do |message| %>
-    <div id="message_#{message.id}">
-      <span>
+    <div class="d-flex flex-row mb-2 chat-area">
+      <div>
         <% if message.user.avator? %>
           <%= image_tag(message.user.avator.to_s, class: 'user_avator', alt: 'avator image') %>
-        <% else %>1
+        <% else %>
           <%= image_tag('default.png', class: 'user_avator', alt: 'avator image') %>
         <% end %>
+      </div>
+      <div class="p-1 chat-message">
         <%= message.user.name %>
-      </span>
-      <br/>
-      <%= message.message %>
-      <%= message.created_at.to_s(:datetime_jp) %>
-      <div class="mt-2 mb-2">
+        <span>
+          <%= message.created_at.to_s(:datetime_jp) %>
+        </span>
+        <div>
+          <%= simple_format(message.message) %>
+        </div>
+      </div>
+      <div class="mt-2 mb-2 chat-delete">
         <%= form_with(model: @message, url: message_path(message.id), method: :delete) do |f| %>
           <%= f.hidden_field :room_id, value: @room.id %>
-          <%= f.submit "削除", class: 'btn btn-primary btn-sm' %>
+          <%= f.submit "×", class:"del-icon", data: {confirm: "削除しますか？"}%>
         <% end %>
       </div>
     </div>
