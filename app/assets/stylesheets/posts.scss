@@ -13,19 +13,42 @@
   max-width: 50%;
 }
 
-.card-header {
-  padding: 5px;
+.post-area:hover {
+  background-color: #EEEEEE;
+}
+
+.chat-area:hover input{
+  background-color: #EEEEEE;
+}
+
+.post-avator {
+  float: left;
+  line-height: 48px;
   a {
     text-decoration: none;
     color: #666;
   }
 }
-.post-user {
-  float: left;
-  line-height: 48px;
+
+.post-content {
+  a {
+    text-decoration: none;  
+    color: #666;
+  }
 }
-.post-info {
+
+.post-name {
+  // font-weight: bold;
+}
+
+.post-date {
   text-align: right;
+  color: gray;
+  font-size: 0.8rem;
+}
+
+.fav-count {
+  font-size: 0.9rem;
 }
 
 .user_avator {

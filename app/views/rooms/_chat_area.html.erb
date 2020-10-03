@@ -29,7 +29,7 @@
           <%= simple_format(message.message) %>
         </div>
       </div>
-      <div class="mt-2 mb-2 chat-delete">
+      <div class="p-1 chat-delete">
         <%= form_with(model: @message, url: message_path(message.id), method: :delete) do |f| %>
           <%= f.hidden_field :room_id, value: @room.id %>
           <%= f.submit "×", class:"del-icon", data: {confirm: "削除しますか？"}%>

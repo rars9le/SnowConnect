@@ -1,21 +1,22 @@
 <ul class="list-unstyled row mx-auto post-cards d-flex flex-column">
   <% posts.each do |post| %>
-    <div class="border-top">
-      <div class="card border-0">
-        <div class="card-header bg-transparent border-0" >
-          <div class="post-user">
-            <% if post.user.avator? %>
-              <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-            <% else %>
-              <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-            <% end %>
-            <%= link_to post.user.name, post.user %>
-          </div>
-          <div class="post-info">
-            <small><%= post.created_at.to_s(:datetime_jp) %></small>
-          </div>
-        </div>
-        <div class="card-body p-2">
+    <div class="d-flex flex-row border post-area">
+      
+      <div class="post-avator pl-1 pt-1">
+        <% if post.user.avator? %>
+          <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
+        <% else %>
+          <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
+        <% end %>
+      </div>
+
+      <div class="post-content p-1">
+        <%= link_to post.user.name, post.user, class:"post-name" %>
+        <span class="post-date pl-2">
+          <%= post.created_at.to_s(:datetime_jp) %>
+        </span>
+      
+        <div class="post-image">
           <span><%= simple_format(post.content) %></span>
           <% if post.image? %>
             <% if post.image.file.content_type.to_s.include?('image/') %>
@@ -26,49 +27,52 @@
                 <%= video_tag post.image.url, width: "468", height: "260", controls: true %>  
             <% end %>
           <% end %> 
-          <div class="pt-2 pb-1">
-            <span class="btn">
-                <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-default btn-sm", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}" %>
-                <% if post.comments.any? %>
-                  <%= "#{post.comments.count}" %>
-              <% end %>
-            </span>
-            <span class="btn">
-              <% if user_signed_in? %>
-                <% if current_user.likes?(post) %>
-                  <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
-                    <%= hidden_field_tag :post_id, post.id %>
-                    <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                    <%= "#{post.favorites.count}" %>
-                  <% end %>
-                <% else %>
-                  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
-                    <%= hidden_field_tag :post_id, post.id %>
-                    <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                  <% end %>
-                <% end %>
-              <% end %>
-            </span>
-            <span class="btn">
-              <% if current_user == post.user %>
-                <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
-                  <i class="far fa-trash-alt"></i> 
-                <% end %>
-              <% end %>
-            </span>
-          </div>
-          <% if user_signed_in? %>
-            <%= content_tag(:div, :class => 'collapse', :id => "comment_form_#{post.id}") do %>
-              <%= render partial: 'comments/form', locals: {comment: comment, post: post} %>
+        </div>
+
+        <div class="post-action">
+          <span>
+              <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-sm", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}" %>
               <% if post.comments.any? %>
-                <%= render post.comments.includes(:user) %>
+                <%= "#{post.comments.count}" %>
+            <% end %>
+          </span>
+          <span class="btn">
+            <% if user_signed_in? %>
+              <% if current_user.likes?(post) %>
+                <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
+                  <%= hidden_field_tag :post_id, post.id %>
+                  <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm" %>
+                  <span class="fav-count"><%= "#{post.favorites.count}" %></span>
+                <% end %>
+              <% else %>
+                <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
+                  <%= hidden_field_tag :post_id, post.id %>
+                  <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm" %>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
+          </span>
+          <span>
+            <% if current_user == post.user %>
+              <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-sm" do %>
+                <i class="far fa-trash-alt"></i> 
+              <% end %>
+            <% end %>
+          </span>
         </div>
+
+        <% if user_signed_in? %>
+          <%= content_tag(:div, :class => 'collapse', :id => "comment_form_#{post.id}") do %>
+            <%= render partial: 'comments/form', locals: {comment: comment, post: post} %>
+            <% if post.comments.any? %>
+              <%= render post.comments.includes(:user) %>
+            <% end %>
+          <% end %>
+        <% end %>
 
       </div>
     </div>
+
   <% end %> 
 
 <%= paginate posts %>

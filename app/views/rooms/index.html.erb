@@ -2,21 +2,26 @@
 
 <div class="container mt-3">
   <div class="row mx-auto">
-    <div class="offset-sm-2 col-sm-8 users">
-
+    <div class="offset-sm-2 col-sm-8">
       <h2 class="form_title">トークルーム一覧</h2>
-
       <% if @rooms.present? %>
         <% @rooms.each do |room| %>
-          <%= link_to room_path(room) do %>
-          <div class="p-2 border link-box">
-            <div class="d-flex flex-row align-items-center">
-              <%= opponent_userAvator(room) %>
-              <%= opponent_userName(room) %>
+
+          <%= link_to room_path(room) do %>  
+            <div class="d-flex flex-row p-2 border link-box">
+              <div>
+                <%= opponent_userAvator(room) %>
+              </div>
+              <div class="p-1 talk-content">
+                <%= opponent_userName(room) %>
+                <%= most_new_message_date_preview(room) %>
+                <div class="talk-message">
+                  <%= most_new_message_preview(room) %>
+                </div>
+              </div>
             </div>
-            <%= most_new_message_preview(room) %>
-          </div>
           <% end %>
+
         <% end %>
       <% else %>
         <p>トークルームが存在しません。</p>
