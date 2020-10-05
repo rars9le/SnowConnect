@@ -52,13 +52,6 @@
               <% end %>
             <% end %>
           </span>
-          <span>
-            <% if current_user == post.user %>
-              <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-sm" do %>
-                <i class="far fa-trash-alt"></i> 
-              <% end %>
-            <% end %>
-          </span>
         </div>
 
         <% if user_signed_in? %>
@@ -71,6 +64,15 @@
         <% end %>
 
       </div>
+
+      <% if current_user.id == post.user.id %>
+        <div class="p-1 post-delete">
+          <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-sm" do %>
+            <p class="del-icon">×</p>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
 
   <% end %> 

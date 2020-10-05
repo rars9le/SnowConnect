@@ -45,8 +45,10 @@ group :development do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-doc'
-  # N+1を検知した場合に警告
+  gem 'hirb'
+  gem 'hirb-unicode'
   gem 'bullet'
+  gem 'rubocop', require: false
 end
 
 group :test do
@@ -78,6 +80,3 @@ gem 'devise'
 gem 'rails-i18n'
 gem 'ransack'
 gem 'dotenv-rails'
-
-gem 'hirb'
-gem 'hirb-unicode'

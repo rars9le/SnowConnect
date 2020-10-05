@@ -17,8 +17,17 @@
   background-color: #EEEEEE;
 }
 
-.chat-area:hover input{
+.post-area:hover p{
   background-color: #EEEEEE;
+}
+
+.post-area:hover div.post-delete{
+    visibility: visible;
+}
+
+.post-delete{
+  margin-left: auto;
+  visibility: hidden;
 }
 
 .post-avator {
@@ -35,10 +44,6 @@
     text-decoration: none;  
     color: #666;
   }
-}
-
-.post-name {
-  // font-weight: bold;
 }
 
 .post-date {
@@ -63,4 +68,9 @@
 
 .nav-link.active {
   border-bottom: 3px solid #ff6600;
+}
+
+.del-icon{
+  text-decoration: none;
+  border-style: none;
 }
