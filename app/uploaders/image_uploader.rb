@@ -4,7 +4,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  
+
   # ファイルサイズを制限
   def size_range
     1..5.megabytes
@@ -29,13 +29,13 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
-  version :thumb, if: :is_image?
+  version :thumb, if: :image?
 
   version :thumb do
-    process :resize_to_limit => [468, 260]
+    process resize_to_limit => [468, 260]
   end
 
-    # process resize_to_fill: [500, 500, 'Center']
+  # process resize_to_fill: [500, 500, 'Center']
   # def scale(width, height)
   #   # do something
   # end
@@ -66,8 +66,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   private
 
-  def is_image? image
+  def image?
     image.content_type.to_s.include?("image/")
   end
-
 end

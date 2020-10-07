@@ -1,38 +1,37 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: %i[index destroy]
-  before_action :set_snowstyle, :set_playstyle, only: %i[edit search]
+  before_action :authenticate_user!, only: [:index, :destroy]
+  before_action :set_snowstyle, :set_playstyle, only: [:edit, :search]
   before_action :admin_user, only: [:destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :confirmWithdrawal, :withdrawal, :followings, :followers, :likes]
 
   def index
     @users = User.order(id: :desc).page(params[:page]).per(PER)
   end
-  
+
   def show
-    @user = User.find(params[:id])
     @posts = @user.posts.includes(:comments).order(id: :desc).page(params[:page])
     @followings = @user.followings.page(params[:page])
     @followers = @user.followers.page(params[:page])
     @like_posts = @user.like_posts.includes(:user, :comments)
 
     if user_signed_in?
-      @currentUserEntry = Entry.where(user_id: current_user.id)
-      @userEntry = Entry.where(user_id: @user.id)
+      @current_user_entry = Entry.where(user_id: current_user.id)
+      @user_entry = Entry.where(user_id: @user.id)
       unless @user.id == current_user.id
-        @currentUserEntry.each do |cu|
-          @userEntry.each do |u|
+        @current_user_entry.each do |cu|
+          @user_entry.each do |u|
             if cu.room_id == u.room_id
-              @haveRoom = true
-              @roomId = cu.room_id
+              @have_room = true
+              @room_id = cu.room_id
             end
           end
         end
-        unless @haveRoom
+        unless @have_room
           @room = Room.new
           @entry = Entry.new
         end
       end
     end
-    
   end
 
   def new
@@ -52,7 +51,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
     unless @user.snow_style.nil?
       @user_snow_style = User.where(id: @user.snow_style.split(','))
     end
@@ -62,65 +60,42 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
       flash[:success] = 'プロフィールが更新されました'
-      redirect_to @user
     else
       flash.now[:danger] = 'プロフィールは更新されませんでした'
-      redirect_to @user
     end
+    redirect_to @user
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     flash[:success] = "ユーザー「#{@user.name}」は正常に削除されました"
     redirect_to users_path
   end
 
-  def confirmWithdrawal
-    @user = User.find(params[:id])
+  def confirm_withdrawal
   end
 
   def withdrawal
-    @user = User.find(params[:id])
     @user.destroy
     flash[:success] = "退会しました"
     redirect_to root_path
   end
 
   def followings
-    @user = User.find(params[:id])
     @followings = @user.followings.page(params[:page])
     counts(@user)
   end
-  
+
   def followers
-    @user = User.find(params[:id])
     @followers = @user.followers.page(params[:page])
     counts(@user)
   end
 
   def likes
-    @user = User.find(params[:id])
     @likes = @user.likes.page(params[:page])
     counts(@user)
-  end
-  
-  def favoriters
-    @user = User.find(params[:id])
-    @favoriters = @user.favoriters.page(params[:page])
-    counts(@user)
-  end
-
-  def set_snowstyle
-    @snowstyle = SNOWSTYLE
-  end
-
-  def set_playstyle
-    @playstyle = PLAYSTYLE
   end
 
   def search
@@ -131,16 +106,27 @@ class UsersController < ApplicationController
 
   private
 
+  def set_snowstyle
+    @snowstyle = SNOWSTYLE
+  end
+
+  def set_playstyle
+    @playstyle = PLAYSTYLE
+  end
+
   def user_params
-    params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, snow_style:[], play_style:[])
+    params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, snow_style: [], play_style: [])
   end
 
   def search_params
     params.permit(:name_cont, :sex_eq, :age_qteq, :age_ltq, :home_gelande_cont, :snow_style_cont, :play_style_cont)
   end
-  
+
   def admin_user
     redirect_to(root_url) unless current_user.admin?
   end
 
+  def set_user
+    @user = User.find(params[:id])
+  end
 end

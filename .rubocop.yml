@@ -1,0 +1,70 @@
+inherit_from: .rubocop_todo.yml
+
+# Rails用のCopを実行
+Rails:
+  Enabled: true
+
+AllCops:
+# 除外するディレクトリ
+  Exclude:
+    - 'config.ru'
+    - 'bin/**'
+    - 'lib/**'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'node_modules/**/*'
+    - !ruby/regexp /old_and_unused\.rb$/
+
+# 日本語でのコメントを許可
+AsciiComments:
+  Enabled: false
+
+# 複数行での「lambda」で「->」による省略記法を許可
+Lambda:
+  Enabled: false
+
+# モジュール名::クラス名の定義を許可
+ClassAndModuleChildren:
+  Enabled: false
+
+# メソッド名のprefixに「set_」「get_」を許可
+AccessorMethodName:
+  Enabled: false
+
+# クラスにコメントを残さないを無効
+Documentation:
+  Enabled: false
+
+# 「and」「or」の使用を許可
+AndOr:
+  Enabled: false
+
+# "Line is too long"を無効
+Metrics/LineLength:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+# 文字リテラルのイミュータブル宣言を無視（freezeになるのはRuby3以降）
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# スコアを20に設定
+Metrics/AbcSize:
+  Max: 20
+
+# クラスの長さ制限を無効
+Metrics/ClassLength:
+  Enabled: false
+
+# 以下Rubocop_todoから移行
+# Offense count: 1
+Metrics/AbcSize:
+  Max: 36
+
+  # Offense count: 1
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 22

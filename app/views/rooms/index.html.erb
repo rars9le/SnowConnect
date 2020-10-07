@@ -10,10 +10,10 @@
           <%= link_to room_path(room) do %>  
             <div class="d-flex flex-row p-2 border link-box">
               <div>
-                <%= opponent_userAvator(room) %>
+                <%= opponent_user_avator(room) %>
               </div>
               <div class="p-1 talk-content">
-                <%= opponent_userName(room) %>
+                <%= opponent_user_name(room) %>
                 <%= most_new_message_date_preview(room) %>
                 <div class="talk-message">
                   <%= most_new_message_preview(room) %>

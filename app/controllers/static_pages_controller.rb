@@ -5,7 +5,5 @@ class StaticPagesController < ApplicationController
     else
       redirect_to posts_path
     end
-
   end
 end
-

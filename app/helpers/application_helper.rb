@@ -2,8 +2,8 @@ module ApplicationHelper
   WEBSITE_NAME = 'SnowConnect'.freeze
 
   # CheckBoxのアイテムを定義
-  SNOWSTYLE = %w[スキーヤー スノーボーダー].freeze
-  PLAYSTYLE = %w[フリーラン ワンメイク ジブ バックカントリー ハーフパイプ パウダー アルペン].freeze
+  SNOWSTYLE = %w(スキーヤー スノーボーダー).freeze
+  PLAYSTYLE = %w(フリーラン ワンメイク ジブ バックカントリー ハーフパイプ パウダー アルペン).freeze
 
   def full_title(page_title = '')
     base_title = WEBSITE_NAME
@@ -29,6 +29,4 @@ module ApplicationHelper
 
     link_to name, path, class: class_name
   end
-
 end
-
