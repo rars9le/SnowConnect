@@ -11,12 +11,9 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      flash[:success] = '投稿が完了しました。'
-      redirect_to root_url
+      redirect_to root_path, flash: { success: "投稿が完了しました。" }
     else
-      @posts = current_user.feed_posts.order(id: :desc).page(params[:page])
-      flash.now[:danger] = '投稿に失敗しました。'
-      render root_url
+      redirect_to root_path, flash: { danger: @post.errors.full_messages }
     end
   end
 

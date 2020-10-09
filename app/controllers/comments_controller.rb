@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     else
       redirect_to root_path, flash: {
         comment: comment,
-        error_messages: comment.errors.full_messages
+        danger: comment.errors.full_messages
       }
     end
   end

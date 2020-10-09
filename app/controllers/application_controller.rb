@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # bootstrap用flashメッセージ
+  add_flash_types :success, :info, :warning, :danger
+  protect_from_forgery with: :exception
 
   private
 

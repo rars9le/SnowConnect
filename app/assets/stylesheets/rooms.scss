@@ -28,10 +28,6 @@ p {
   text-decoration: none;
 }
 
-.link-box:hover {
-  opacity: 0.5;
-}
-
 .chat-message span{
   color: gray;
   font-size: 0.8rem;
@@ -39,6 +35,11 @@ p {
 
 .chat-delete{
   margin-left: auto;
+  visibility: hidden;
+}
+
+.chat-area:hover div.chat-delete{
+  visibility: visible;
 }
 
 .del-icon{

@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <%= form_with model: @post do |f| %>
+  <%= form_with model: @post, local: true do |f| %>
     <div class="form-group">
       <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
     </div>
@@ -13,14 +13,21 @@
 
 <script type="text/javascript">
   $(function() {
-    function readURL(input) {        
-      if (input.files && input.files[0]) {   
+    function readURL(input) {
+      if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
           $('#post_img_prev').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
+
+        //アップロードを許可している画像拡張子
+        var allow_exts = new Array('jpg', 'jpeg', 'png', 'gif');
+
+        if (!checkExt(input.files[0])) {
+          return;
+        }
       }
     }
 
@@ -29,5 +36,24 @@
       $('.post_present_img').remove();
       readURL(this);
     });
+
+    //アップロード予定のファイル名の拡張子が許可されているか確認する関数
+    function checkExt(filename)
+    {
+      //比較のため小文字にする
+      var ext = getExt(filename).toLowerCase();
+      //許可する拡張子の一覧(allow_exts)から対象の拡張子があるか確認する
+      if (allow_exts.indexOf(ext) === -1) return false;
+      return true;
+    }
+
+    //ファイル名から拡張子を取得する関数
+    function getExt(filename)
+    {
+      var pos = filename.lastIndexOf('.');
+      if (pos === -1) return '';
+      return filename.slice(pos + 1);
+    }
+
   });
 </script> 

@@ -65,7 +65,7 @@
 
       </div>
 
-      <% if current_user.id == post.user.id %>
+      <% if user_signed_in? && current_user.id == post.user.id %>
         <div class="p-1 post-delete">
           <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-sm" do %>
             <p class="del-icon">×</p>

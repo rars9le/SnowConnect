@@ -290,3 +290,12 @@ nav.nav-pills {
   text-align: center;
   margin-top: 14px;
 }
+
+//エラーメッセージ
+.alert{
+  text-align:center;
+  ul {
+	padding-left: 0;
+	display: inline-block;
+  }
+}

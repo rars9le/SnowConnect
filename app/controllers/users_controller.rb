@@ -60,6 +60,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    # パスワードがブランクの場合はvalidateを無視する
+    if params[:user][:password].blank?
+      params[:user].delete("password")
+      params[:user].delete("password_confirmation")
+    end
     if @user.update(user_params)
       flash[:success] = 'プロフィールが更新されました'
     else
@@ -115,7 +120,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :email, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, snow_style: [], play_style: [])
+    params.require(:user).permit(:name, :introduction, :email, :password, :password_confirmation, :sex, :age, :home_gelande, :age_open_range, :sex_open_range, :avator, :avator_cache, snow_style: [], play_style: [])
   end
 
   def search_params

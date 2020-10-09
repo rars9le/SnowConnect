@@ -16,8 +16,3 @@
 //= require jquery
 //= require bootstrap
 //= require_tree .
-
-// Flashメッセージを時間経過で無くす
-$(function(){
-  setTimeout("$('.time-limit').fadeOut('slow')", 2000);
-});

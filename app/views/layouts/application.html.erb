@@ -20,7 +20,15 @@
   
   <body>
     <%= render 'header' %>
+    <%= render 'shared/flash_messages' %>
     <main><%= yield %></main>
     <%= render 'footer' %>
   </body>
 </html>
+
+<script>
+  // Flashメッセージを時間経過で無くす
+  $(function(){
+    setTimeout("$('.alert-success').fadeOut('slow')", 2000);
+  });
+</script>
