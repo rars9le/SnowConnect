@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @posts = @user.posts.includes(:comments).order(id: :desc).page(params[:page])
+    @comment = Comment.new(flash[:comment])
     @followings = @user.followings.page(params[:page])
     @followers = @user.followers.page(params[:page])
     @like_posts = @user.like_posts.includes(:user, :comments)
@@ -45,7 +46,7 @@ class UsersController < ApplicationController
       flash[:success] = 'ユーザを登録しました。'
       redirect_to :login
     else
-      flash.now[:danger] = 'ユーザの登録に失敗しました。'
+      flash.now[:danger] = @user.errors.full_messages
       render :new
     end
   end
@@ -67,10 +68,11 @@ class UsersController < ApplicationController
     end
     if @user.update(user_params)
       flash[:success] = 'プロフィールが更新されました'
+      redirect_to @user
     else
-      flash.now[:danger] = 'プロフィールは更新されませんでした'
+      flash[:danger] = @user.errors.full_messages
+      redirect_back(fallback_location: root_path)
     end
-    redirect_to @user
   end
 
   def destroy

@@ -26,6 +26,7 @@ ja:
       signed_in: ''
       signed_out: ''
   errors:
+    format: "%{attribute}%{message}"
     messages:
       carrierwave_processing_error: 処理できませんでした
       carrierwave_integrity_error: は許可されていないファイルタイプです

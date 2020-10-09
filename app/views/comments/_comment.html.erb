@@ -1,18 +1,24 @@
-<div class="comment-header bg-transparent">
+<div class="comment-header d-flex flex-row">
+  <div class="p-1">
+    <% if comment.user.avator? %>
+      <%= link_to image_tag(comment.user.avator.to_s, class: 'user_avator', alt: 'avator image'), comment.user %>
+    <% else %>
+      <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), comment.user %>
+    <% end %>
+  </div>
 
-  <% if comment.user.avator? %>
-    <%= link_to image_tag(comment.user.avator.to_s, class: 'user_avator', alt: 'avator image'), comment.user %>
-  <% else %>
-    <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), comment.user %>
-  <% end %>
-  <span><%= link_to comment.user.name, comment.user %></span>
-  <span><%= comment.created_at.to_s(:datetime_jp) %></span>
-  <% if user_signed_in? && (current_user.id == comment.user.id || current_user.admin?) %>
-    <span><%= link_to '削除', comment, method: :delete, data: { confirm: 'コメントを削除してもよろしいですか？' } %></span>
-  <% end %>
+  <div class="p-1">
+    <span><%= link_to comment.user.name, comment.user %></span>
+    <span class="comment-date"><%= comment.created_at.to_s(:datetime_jp) %></span>
+    <div class="p-1">
+      <%= simple_format(comment.comment) %>
+    </div>
+  </div>
 
-  <div class="p-2">
-    <p><%= simple_format(comment.comment) %></p>
+  <div class="comment-delete">
+    <% if user_signed_in? && (current_user.id == comment.user.id || current_user.admin?) %>
+      <span><%= link_to '×', comment, method: :delete, data: { confirm: 'コメントを削除しますか？' } %></span>
+    <% end %>
   </div>
 
 </div>

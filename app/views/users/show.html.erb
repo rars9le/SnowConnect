@@ -106,70 +106,7 @@
     <!--投稿タブのアイテム-->
     <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="posts-tab">
       <% if @posts.any? %>
-        <ul class="list-unstyled row post-cards">
-          <% @posts.each do |post| %>
-            <div class="col-md-8 mx-auto border-bottom">
-              <div class="card border-0">
-                <div class="card-header bg-transparent border-0" >
-                  <div class="post-user">
-                    <% if post.user.avator? %>
-                      <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-                    <% else %>
-                      <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-                    <% end %>
-                    <%= link_to post.user.name, post.user %>
-                  </div>
-                  <div class="post-info">
-                    <small><%= post.created_at.to_s(:datetime_jp) %></small>
-                  </div>
-                </div>
-                <div class="card-body p-1">
-                  <span><%= simple_format(post.content) %></span>
-                  <% if post.image? %>
-                    <% if post.image.file.content_type.to_s.include?('image/') %>
-                      <%= link_to post.image.url, "data-lightbox": post.image do %>
-                        <%= image_tag(post.image.url(:thumb), alt: 'post image') %>
-                      <% end %>
-                    <% else %>
-                        <%= video_tag post.image.url, width: "468", height: "260", controls: true %>  
-                    <% end %>    
-                  <% end %> 
-                  <div class="pt-2 pb-1">
-                    <span class="btn">
-                      <% if post.comments.any? %>
-                        <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, :class =>"btn btn-default btn-sm" %>
-                        <%= "#{post.comments.count}" %>
-                      <% else %>
-                        <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, :class =>"btn btn-default btn-sm" %>
-                      <% end %>
-                    </span>
-                    <span class="btn">
-                      <% if @user.likes?(post) %>
-                        <%= form_with(model: @user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
-                          <%= hidden_field_tag :post_id, post.id %>
-                          <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                          <%= "#{post.favorites.count}" %>
-                        <% end %>
-                      <% else %>
-                        <%= form_with(model: @user.favorites.build, local: true) do |f| %>
-                          <%= hidden_field_tag :post_id, post.id %>
-                          <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                        <% end %>
-                      <% end %>
-                    </span>
-                    <span class="btn">
-                      <% if @user == post.user %>
-                        <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
-                          <i class="far fa-trash-alt"></i> 
-                        <% end %>
-                      <% end %>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %> 
-        </ul>
+        <%= render partial: 'posts/index_feed', locals: { posts: @posts, comment: @comment} %>
       <% else %>
         <div class="no-contents d-flex justify-content-center align-items-center">
           投稿がありません
@@ -202,74 +139,7 @@
     <!--お気に入りタブのアイテム-->
     <div class="tab-pane fade" id="item4" role="tabpanel" aria-labelledby="likes-tab">
       <% if @like_posts.any? %>
-        <ul class="list-unstyled row post-cards">
-          <% @like_posts.each do |post| %>
-            <div class="col-md-8 mx-auto border-bottom">
-              <div class="card border-0">
-                <div class="card-header bg-transparent border-0" >
-                  <div class="post-user">
-                    <% if post.user.avator? %>
-                      <%= link_to image_tag(post.user.avator.to_s, class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-                    <% else %>
-                      <%= link_to image_tag('default.png', class: 'user_avator', alt: 'avator image'), post.user, class: 'mr-2' %>
-                    <% end %>
-                    <%= link_to post.user.name, post.user %>
-                  </div>
-                  <div class="post-info">
-                    <small><%= post.created_at.to_s(:datetime_jp) %></small>
-                  </div>
-                </div>
-                <div class="card-body p-1">
-                  <span>
-                    <%= simple_format(post.content) %>
-                  </span>
-                  <span>
-                    <% if post.image? %>
-                      <% if post.image.file.content_type.to_s.include?('image/') %>
-                        <%= link_to post.image.url, "data-lightbox": post.image do %>
-                          <%= image_tag(post.image.url(:thumb), alt: 'post image') %>
-                        <% end %>
-                      <% else %>
-                          <%= video_tag post.image.url, width: "468", height: "260", controls: true %>  
-                      <% end %>    
-                    <% end %> 
-                  </span>
-                  <div class="pt-2 pb-1">
-                    <span class="btn">
-                      <% if post.comments.any? %>
-                        <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, :class =>"btn btn-default btn-sm" %>
-                        <%= "#{post.comments.count}" %>
-                      <% else %>
-                        <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, :class =>"btn btn-default btn-sm" %>
-                      <% end %>
-                    </span>
-                    <span class="btn">
-                      <% if @user.likes?(post) %>
-                        <%= form_with(model: @user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
-                          <%= hidden_field_tag :post_id, post.id %>
-                          <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                          <%= "#{post.favorites.count}" %>
-                        <% end %>
-                      <% else %>
-                        <%= form_with(model: @user.favorites.build, local: true) do |f| %>
-                          <%= hidden_field_tag :post_id, post.id %>
-                          <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
-                        <% end %>
-                      <% end %>
-                    </span>
-                    <span class="btn">
-                      <% if @user == post.user %>
-                        <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
-                          <i class="far fa-trash-alt"></i> 
-                        <% end %>
-                      <% end %>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %> 
-        </ul>
+        <%= render partial: 'posts/index_feed', locals: { posts: @like_posts, comment: @comment} %>
       <% else %>
         <div class="no-contents d-flex justify-content-center align-items-center">
           いいね！ した投稿がありません

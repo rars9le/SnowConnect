@@ -1,21 +1,17 @@
 class CommentsController < ApplicationController
   def create
     comment = current_user.comments.build(comment_params)
-    if comment.save
-      redirect_to root_path
-    else
-      redirect_to root_path, flash: {
-        comment: comment,
-        danger: comment.errors.full_messages
-      }
+    unless comment.save
+      flash[:danger] = comment.errors.full_messages
     end
+    redirect_back(fallback_location: root_path)
   end
 
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy
     flash[:success] = 'コメントが削除されました'
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
 
   private

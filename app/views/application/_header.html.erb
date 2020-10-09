@@ -41,7 +41,7 @@
               <%= link_to icon('fas', 'user') + ' マイページ', user_path(current_user), class: 'dropdown-item' %>
               <%= link_to icon('fas', 'user-edit') + ' プロフィール編集', edit_user_path(current_user), class: 'dropdown-item' %>
               <%= link_to icon('fas', 'sign-out-alt') + ' ログアウト', logout_path, class: 'dropdown-item' %>
-              <% unless current_user.guest? %>
+              <% unless current_user.guest? || current_user.admin? %>
                 <%= link_to icon('fas', 'user-minus') + ' 退会', confirm_withdrawal_user_path(current_user), class: 'dropdown-item' %>
               <% end %>
           </li>
