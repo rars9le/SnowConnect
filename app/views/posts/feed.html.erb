@@ -2,25 +2,32 @@
 
 <div class="container pt-4">
   <div class="row">
-    <aside class="col-sm-4">
+    <div class="col-md-8 mx-auto">
+      <%= render 'index_nav' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 mx-auto">
       <%= render 'index_user_posts' %>
-    </aside>
-    <div class="col-sm-8">
-      <% if user_signed_in? %>
-        <% if @feed_posts.any? %>
+    </div>
+  </div>
+  <div class="row">
+    <% if user_signed_in? %>
+      <% if @feed_posts.any? %>
+        <div class="post-cards d-flex flex-column col-md-8 mx-auto pt-2">
           <%= render partial: 'index_feed', locals: { posts: @feed_posts, comment: @comment} %>
-        <% else %>
-          <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
-            <div class="no-contents-title font-weight-bold">投稿がありません</div>
-            <div class="no-contents-explanation text-center">あなた自身の投稿や、あなたがフォローしたユーザーの投稿がここに表示されます。</div>
-          </div>
-        <% end %>
+        </div>
       <% else %>
         <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
-          <div class="no-contents-title font-weight-bold">ログインしてください</div>
+          <div class="no-contents-title font-weight-bold">投稿がありません</div>
           <div class="no-contents-explanation text-center">あなた自身の投稿や、あなたがフォローしたユーザーの投稿がここに表示されます。</div>
         </div>
       <% end %>
-    </div>
+    <% else %>
+      <div class="no-contents d-flex flex-column align-items-center justify-content-center mx-auto">
+        <div class="no-contents-title font-weight-bold">ログインしてください</div>
+        <div class="no-contents-explanation text-center">あなた自身の投稿や、あなたがフォローしたユーザーの投稿がここに表示されます。</div>
+      </div>
+    <% end %>      
   </div>
 </div>

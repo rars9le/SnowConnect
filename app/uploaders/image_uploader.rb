@@ -32,7 +32,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :thumb, if: :image?
 
   version :thumb do
-    process :resize_to_limit => [468, 260]
+    process :resize_to_limit => [400, 200]
   end
 
   # process resize_to_fill: [500, 500, 'Center']

@@ -1,7 +1,14 @@
+.post-form {
+  background-color: #ddd;
+  border: solid 2px #707070;
+  border-radius: 0.5rem;
+  padding: 10px 20px 40px 10px;
+}
+
 .post-cards {
   padding: 0 20px;
-  // margin-bottom: 5px;
 }
+
 .card-index {
   margin: 0px 0;
 }
@@ -64,10 +71,6 @@
 
 .nav {
   list-style: none;
-}
-
-.nav-link.active {
-  border-bottom: 3px solid #ff6600;
 }
 
 .del-icon{

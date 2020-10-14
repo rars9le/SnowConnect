@@ -1,14 +1,16 @@
 <% if user_signed_in? %>
-  <%= form_with model: @post, local: true do |f| %>
-    <div class="form-group">
-      <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
-    </div>
-    <div class="text-center mb-3">
-      <img id="post_img_prev" src="#" class='hidden mb-4 img_preview'/>
-      <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png,video/*',id: "upload-image" %>
-    </div>
-    <%= f.submit '投稿', class: 'btn btn-secondary btn-block' %>
-  <% end %>
+  <div class="post-form">
+    <%= form_with model: @post, local: true do |f| %>
+      <div class="form-group">
+        <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
+      </div>
+      <div class="text-center">
+        <img id="post_img_prev" src="#" class='hidden mb-4 img_preview'/>
+        <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png,video/*',id: "upload-image", class: "float-left pl-2" %>
+        <%= f.submit '投稿する', class: 'btn btn-secondary btn-sm float-right mr-2' %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
 
 <script type="text/javascript">

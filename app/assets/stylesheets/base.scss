@@ -108,19 +108,6 @@ footer {
   }
 }
 
-/* 検索フォーム関連 */
-.search-form {
-  background-color: #ddd;
-  border: solid 2px #707070;
-  border-radius: 1.5rem;
-  padding: 10px 20px;
-}
-@media (min-width: 1200px) {
-  .search-form {
-    max-width: 1040px;
-  }
-}
-
 /* その他 */
 .hidden {
   display: none;
