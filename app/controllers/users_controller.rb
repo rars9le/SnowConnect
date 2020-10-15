@@ -9,11 +9,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @posts = @user.posts.includes(:comments).order(id: :desc).page(params[:page])
+    @posts = @user.posts.includes(:comments).order(id: :desc).page(params[:page]).per(PER)
     @comment = Comment.new(flash[:comment])
     @followings = @user.followings.page(params[:page])
     @followers = @user.followers.page(params[:page])
-    @like_posts = @user.like_posts.includes(:user, :comments)
+    @like_posts = @user.like_posts.includes(:user, :comments).page(params[:page])
 
     if user_signed_in?
       @current_user_entry = Entry.where(user_id: current_user.id)
@@ -108,7 +108,7 @@ class UsersController < ApplicationController
   def search
     @comment = Comment.new(flash[:comment])
     @q = User.ransack(params[:q])
-    @users = @q.result.page(params[:page])
+    @users = @q.result.page(params[:page]).per(15)
   end
 
   private

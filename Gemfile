@@ -49,6 +49,7 @@ group :development do
   gem 'hirb-unicode'
   gem 'bullet'
   gem 'rubocop', require: false
+  gem 'faker'
 end
 
 group :test do
