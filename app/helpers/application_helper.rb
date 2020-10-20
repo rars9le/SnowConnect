@@ -23,6 +23,14 @@ module ApplicationHelper
     end
   end
 
+  def active_action?(action_name)    
+    return "active" if action_name == params[:action]
+  end
+
+  def active?(controller_name, action_name)    
+    return "active" if controller_name == params[:controller] && action_name == params[:action]
+  end
+
   def nav_link_add_active(name, path)
     class_name = 'nav-link nav-item'
     class_name << ' active' if current_page?(path)

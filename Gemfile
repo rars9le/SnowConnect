@@ -69,14 +69,10 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # ---- 以下追加 ----
-gem 'bootstrap', '>= 4.3.1'
-gem "jquery-rails"
-gem "jquery-ui-rails"
 gem 'kaminari'
 gem 'carrierwave', '1.2.2'
 gem 'mini_magick', '>= 4.9.4'
 gem 'fog-aws'
-gem 'font-awesome-sass', '~> 5.4.1'
 gem 'devise'
 gem 'rails-i18n'
 gem 'ransack'
