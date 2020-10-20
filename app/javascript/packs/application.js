@@ -14,8 +14,8 @@ require("channels")
 /* 以下追加 */
 require('jquery')
 require('bootstrap')
-require('infinite-scroll.pkgd.min.js')
-require('users.js')
+require('infinite-scroll.pkgd.min')
+require('users')
 
 // Flashメッセージを時間経過で無くす
 $(function(){
