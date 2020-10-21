@@ -40,6 +40,12 @@ footer {
   }
 }
 
+/* UserForm */
+.user_form {
+  max-width: 440px;
+  margin-top: 30px;
+}
+
 .form_title {
   margin-bottom: 15px;
 }
@@ -279,4 +285,14 @@ nav.nav-pills {
 	padding-left: 0;
 	display: inline-block;
   }
+}
+
+/*ページネーション自体のデザイン*/
+.pagination>li>a {          
+  color: #696969;   /*文字の色を変える*/
+}
+
+/* 表示しているページ番号のデザイン */
+.pagination>.active>a {     
+  background: #93c9ff;     /*背景の色を変える*/
 }

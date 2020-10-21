@@ -2,8 +2,8 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
+import 'bootstrap'
 import '../src/application.scss'
 
 require("@rails/ujs").start()
@@ -13,9 +13,8 @@ require("channels")
 
 /* 以下追加 */
 require('jquery')
-require('bootstrap')
-require('infinite-scroll.pkgd.min')
-require('users')
+require('users.js')
+require('jquery.jscroll.min.js')
 
 // Flashメッセージを時間経過で無くす
 $(function(){

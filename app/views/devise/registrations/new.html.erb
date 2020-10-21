@@ -1,7 +1,11 @@
 <% provide :title, '新規ユーザー登録' %>
 
-<%= render "devise/shared/notice_alert" %>
-<%= render "devise/shared/error_messages", resource: resource %>
+<%
+=begin%>
+ <%= render "devise/shared/notice_alert" %>
+<%= render "devise/shared/error_messages", resource: resource %> 
+<%
+=end%>
 
 <div class="container user_form">
   <h2 class="form_title">新規ユーザー登録</h2>
