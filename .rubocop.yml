@@ -62,9 +62,9 @@ Metrics/ClassLength:
 # 以下Rubocop_todoから移行
 # Offense count: 1
 Metrics/AbcSize:
-  Max: 36
+  Max: 43
 
   # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 22
+  Max: 23

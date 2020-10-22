@@ -23,11 +23,11 @@ module ApplicationHelper
     end
   end
 
-  def active_action?(action_name)    
+  def active_action?(action_name)
     return "active" if action_name == params[:action]
   end
 
-  def active?(controller_name, action_name)    
+  def active?(controller_name, action_name)
     return "active" if controller_name == params[:controller] && action_name == params[:action]
   end
 

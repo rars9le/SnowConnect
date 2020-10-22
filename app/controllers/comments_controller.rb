@@ -1,9 +1,7 @@
 class CommentsController < ApplicationController
   def create
     comment = current_user.comments.build(comment_params)
-    unless comment.save
-      flash[:danger] = comment.errors.full_messages
-    end
+    flash[:danger] = comment.errors.full_messages unless comment.save
     redirect_back(fallback_location: root_path)
   end
 
