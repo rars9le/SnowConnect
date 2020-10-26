@@ -55,6 +55,7 @@ group :development do
   gem 'rubocop', require: false
   gem "pre-commit", require: false
   gem 'spring-commands-rspec'
+  gem 'annotate'
 end
 
 group :test do
