@@ -78,8 +78,14 @@ class User < ApplicationRecord
     relationship.destroy if relationship
   end
 
+  # フォローしているか判定
   def following?(other_user)
     followings.include?(other_user)
+  end
+
+  # フォローされているか判定
+  def followed_by?(user)
+    followers.include?(user)
   end
 
   def favorite(post)
@@ -93,11 +99,6 @@ class User < ApplicationRecord
 
   def likes?(post)
     like_posts.include?(post)
-  end
-
-  # フォローされているか判定
-  def followed_by?(user)
-    reverses_of_relationship.find_by(follow_id: user.id).present?
   end
 
   def feed_posts

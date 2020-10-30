@@ -22,5 +22,49 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:message) { create(:message) }
+
+  it '有効なファクトリを持つこと' do
+    expect(message).to be_valid
+  end
+
+  it 'メッセージ、ルーム、ユーザーが有効であること' do
+    user = create(:user)
+    room = create(:room)
+    message = Message.new(
+      message: 'test',
+      user: user,
+      room: room
+    )
+    expect(message).to be_valid
+  end
+
+  describe '存在性の検証' do
+    it '内容がない場合、無効であること' do
+      message.content = ''
+      message.valid?
+      expect(message).to_not be_valid
+    end
+    it 'ユーザーがない場合、無効であること' do
+      message.user = nil
+      message.valid?
+      expect(message).to_not be_valid
+    end
+    it 'ルームがない場合、無効であること' do
+      message.room = nil
+      message.valid?
+      expect(message).to_not be_valid
+    end
+  end
+
+  describe '文字数の検証' do
+    it 'メッセージが255文字以内の場合、有効であること' do
+      message.content = 'a' * 255
+      expect(message).to be_valid
+    end
+    it 'メッセージが256文字以上の場合、無効であること' do
+      message.content = 'a' * 256
+      expect(message).to_not be_valid
+    end
+  end
 end

@@ -53,7 +53,6 @@ group :development do
   gem 'hirb-unicode'
   gem 'bullet'
   gem 'rubocop', require: false
-  gem "pre-commit", require: false
   gem 'spring-commands-rspec'
   gem 'annotate'
 end
