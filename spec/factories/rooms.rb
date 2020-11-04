@@ -8,6 +8,6 @@
 #
 FactoryBot.define do
   factory :room do
-    association :user
+    created_at { Faker::Time.between(from: DateTime.now - 2, to: DateTime.now) }
   end
 end

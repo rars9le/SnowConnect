@@ -23,7 +23,9 @@ FactoryBot.define do
   factory :message do
     message { 'test' }
     association :room
-    user { room.user }
+    association :user
+    room { room }
+    user{ user }
     created_at { Faker::Time.between(from: DateTime.now - 2, to: DateTime.now) }
   end
 end

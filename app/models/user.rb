@@ -60,7 +60,7 @@ class User < ApplicationRecord
 
   has_many :favorites, dependent: :destroy
   has_many :like_posts, through: :favorites, source: :post
-  has_many :messages
+  has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy
   has_many :rooms, through: :entries
   has_many :comments, dependent: :destroy

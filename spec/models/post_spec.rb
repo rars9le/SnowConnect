@@ -60,9 +60,9 @@ RSpec.describe Post, type: :model do
       user1 = create(:user)
       user2 = create(:user, :with_posts, posts_count: 1)
       expect(user2.posts.first.liked_by?(user1)).to eq false
-      user1.like(user2.posts.first)
+      user1.favorite(user2.posts.first)
       expect(user2.posts.first.liked_by?(user1)).to eq true
-      user1.unlike(user2.posts.first)
+      user1.unfavorite(user2.posts.first)
       expect(user2.posts.first.liked_by?(user1)).to eq false
     end
   end

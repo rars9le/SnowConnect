@@ -22,7 +22,13 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  let(:message) { create(:message) }
+  let(:message) { user = create(:user)
+    room = create(:room)
+    message = Message.new(
+      message: 'test',
+      user: user,
+      room: room
+    ) }
 
   it '有効なファクトリを持つこと' do
     expect(message).to be_valid
@@ -41,7 +47,7 @@ RSpec.describe Message, type: :model do
 
   describe '存在性の検証' do
     it '内容がない場合、無効であること' do
-      message.content = ''
+      message.message = ''
       message.valid?
       expect(message).to_not be_valid
     end
@@ -59,11 +65,11 @@ RSpec.describe Message, type: :model do
 
   describe '文字数の検証' do
     it 'メッセージが255文字以内の場合、有効であること' do
-      message.content = 'a' * 255
+      message.message = 'a' * 255
       expect(message).to be_valid
     end
     it 'メッセージが256文字以上の場合、無効であること' do
-      message.content = 'a' * 256
+      message.message = 'a' * 256
       expect(message).to_not be_valid
     end
   end

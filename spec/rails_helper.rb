@@ -65,4 +65,8 @@ RSpec.configure do |config|
   # 追加
   require 'capybara/rspec'
   config.include FactoryBot::Syntax::Methods
+
+  # Requestスペックでdeviseテストヘルパーを利用する
+  config.include RequestSpecHelper, type: :request
+
 end

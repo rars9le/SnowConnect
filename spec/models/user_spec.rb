@@ -36,8 +36,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  # pending 'この先はなぜかテストが失敗するのであとで直す'
-
   before do
     @user = build(:user)
   end
@@ -47,7 +45,12 @@ RSpec.describe User, type: :model do
   end
 
   it '名前、メール、パスワードがある場合、有効であること' do
-    expect(@user).to be_valid
+    user = User.new(
+      name: 'TestUser',
+      email: 'test@expample.com',
+      password: 'password'
+    )
+    expect(user).to be_valid
   end
 
   describe '存在性の検証' do
@@ -63,15 +66,14 @@ RSpec.describe User, type: :model do
       expect(@user).to_not be_valid
     end
 
-    # it "パスワードがない場合、無効である" 
-    #   @user.password = @user.password_confirmation = ' ' * 8
-    #   @user.valid?
-    #   expect(@user).to_not be_valid
-    # end
+    it "パスワードがない場合、無効である" do
+      @user.password = @user.password_confirmation = ' ' * 8
+      @user.valid?
+      expect(@user).to_not be_valid
+    end
   end
 
   describe '文字数の検証' do
-
     it '名前が51文字以上の場合、無効であること' do
       @user.name = 'a' * 51
       expect(@user).to_not be_valid
@@ -98,16 +100,16 @@ RSpec.describe User, type: :model do
       expect(@user.errors).to be_added(:email, :too_long, count: 255)
     end
 
-    # it 'パスワードが8文字以上の場合、有効であること' do
-    #   @user.password = @user.password_confirmation = 'a' * 8
-    #   expect(@user).to be_valid
-    # end
+    it 'パスワードが8文字以上の場合、有効であること' do
+      @user.password = @user.password_confirmation = 'a' * 8
+      expect(@user).to be_valid
+    end
 
-    # it 'パスワードが8文字未満の場合、無効であること' do
-    #   @user.password = @user.password_confirmation = 'a' * 7
-    #   @user.valid?
-    #   expect(@user).errors.of_kind?(:password, :too_short).to be_truthy
-    # end
+    it 'パスワードが8文字未満の場合、無効であること' do
+      @user.password = @user.password_confirmation = 'a' * 7
+      @user.valid?
+      expect(@user.errors).to be_added(:password, :too_short, count: 8)
+    end
   end
 
   describe '一意性の検証' do
@@ -126,16 +128,16 @@ RSpec.describe User, type: :model do
   end
 
   describe 'パスワードの検証' do
-    # it 'パスワードと確認用パスワードが間違っている場合、無効であること' do
-    #   @user.password = 'password'
-    #   @user.password_confirmation = 'pass'
-    #   expect(@user).to_not be_valid
-    # end
+    it 'パスワードと確認用パスワードが間違っている場合、無効であること' do
+      @user.password = 'password'
+      @user.password_confirmation = 'pass'
+      expect(@user).to_not be_valid
+    end
 
-    # it 'パスワードが暗号化されていること' do
-    #   user = create(:user)
-    #   expect(user.encrypted_password).to_not eq 'password'
-    # end
+    it 'パスワードが暗号化されていること' do
+      user = create(:user)
+      expect(user.encrypted_password).to_not eq 'password'
+    end
   end
 
   describe 'フォーマットの検証' do
@@ -189,7 +191,7 @@ RSpec.describe User, type: :model do
     it 'ユーザーを削除すると、関連するいいねも削除されること' do
       user = create(:user)
       post = create(:post)
-      user.like(post)
+      user.favorite(post)
       expect(post.liked_by?(user)).to eq true
       expect { user.destroy }.to change { user.like_posts.count }.by(-1)
     end
@@ -198,7 +200,7 @@ RSpec.describe User, type: :model do
       user = create(:user)
       following_user = create(:user)
       user.follow(following_user)
-      expect(following_user.following?(user)).to eq true
+      expect(following_user.followed_by?(user)).to eq true
       expect { user.destroy }.to change { following_user.followers.count }.by(-1)
     end
 
@@ -206,9 +208,8 @@ RSpec.describe User, type: :model do
       user = create(:user)
       follower_user = create(:user)
       follower_user.follow(user)
-      expect(user.following?(follower_user)).to eq true
+      expect(user.followed_by?(follower_user)).to eq true
       expect { user.destroy }.to change { follower_user.followings.count }.by(-1)
     end
   end
-
 end

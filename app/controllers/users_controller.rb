@@ -81,6 +81,8 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def like_posts; end
+
   def confirm_withdrawal
   end
 

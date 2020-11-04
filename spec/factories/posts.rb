@@ -18,9 +18,12 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  factory :post do
+  factory :post do    
+    content { '投稿テスト' }
+    image { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/test.jpg')) }
     association :user
-    
+    created_at { Faker::Time.between(from: DateTime.now - 2, to: DateTime.now) }
+
     trait :with_comments do
       transient do
         comments_count { 5 }
@@ -37,7 +40,7 @@ FactoryBot.define do
       end
 
       after(:create) do |post, evaluator|
-        create_list(:like, evaluator.likes_count, post: post)
+        create_list(:favorite, evaluator.likes_count, post: post)
       end
     end
   end
