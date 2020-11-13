@@ -1,66 +1,74 @@
 require 'rails_helper'
 
 RSpec.describe 'Search', type: :system do
-  let!(:user) do
+  let!(:user1) do
     create(:user,
-           name: 'TestUser',
-           email: 'test@example.com',
-           password: '12345678')
+           name: 'User1',
+           age: 10
+           sex: 0
+           introduction: 'スノーボーダーです'
+           snow_style: 'スノーボーダー'
+           play_style: 'フリーラン'
+           home_gelande: 'スカイバレイ'
+           email: 'user1@example.com',
+           password: 'password_user1')
   end
-
-  let!(:post1) do
-    create(:post,
-           caption: '今日は晴れそうです',
-           prefecture_id: 1,  # 北海道
-           city_id: 1,        # 札幌市中央区
-           weather: '晴れ')
+  let!(:user2) do
+    create(:user,
+           name: 'User2',
+           age: 20
+           sex: 1
+           introduction: 'スキーヤーです'
+           snow_style: 'スキーヤー'
+           play_style: 'パウダー'
+           home_gelande: 'ハチ北'
+           email: 'user2@example.com',
+           password: 'password_user2')
   end
-  let!(:post2) do
-    create(:post,
-           caption: '今日は曇りそうです',
-           prefecture_id: 13, # 東京都
-           city_id: 667,      # 渋谷区
-           weather: '曇り')
-  end
-  let!(:post3) do
-    create(:post,
-           caption: '今日は雨です',
-           prefecture_id: 47, # 沖縄県
-           city_id: 1856,     # 那覇市
-           weather: '雨')
+  let!(:user3) do
+    create(:user,
+           name: 'User3',
+           age: nil
+           sex: nil
+           introduction: 'スノースクートです'
+           snow_style: ''
+           play_style: ''
+           home_gelande: ''
+           email: 'user3@example.com',
+           password: 'password_user3')
   end
 
   before '検索ページへ移動する' do
     visit root_path
     click_link '検索'
-    expect(current_path).to eq search_posts_path
+    expect(current_path).to eq search_users_path
   end
 
-  describe '投稿を検索する', js: true do
-    it 'キャプションで検索できること' do
-      # キャプション「晴れ」で検索する
-      fill_in 'キャプション', with: '晴れ'
+  describe 'ユーザーを検索する', js: true do
+    it '内容で検索できること' do
+      # 内容「スノーボーダー」で検索する
+      fill_in '内容', with: 'スノーボーダー'
       click_button '検索する'
       expect(page).to have_link 'a', href: "/posts/#{post1.id}"
       expect(page).to_not have_link 'a', href: "/posts/#{post2.id}"
       expect(page).to_not have_link 'a', href: "/posts/#{post3.id}"
 
-      # キャプション「曇り」で検索する
-      fill_in 'キャプション', with: '曇り'
+      # 内容「曇り」で検索する
+      fill_in '内容', with: '曇り'
       click_button '検索する'
       expect(page).to_not have_link 'a', href: "/posts/#{post1.id}"
       expect(page).to have_link 'a', href: "/posts/#{post2.id}"
       expect(page).to_not have_link 'a', href: "/posts/#{post3.id}"
 
-      # キャプション「雨」で検索する
-      fill_in 'キャプション', with: '雨'
+      # 内容「雨」で検索する
+      fill_in '内容', with: '雨'
       click_button '検索する'
       expect(page).to_not have_link 'a', href: "/posts/#{post1.id}"
       expect(page).to_not have_link 'a', href: "/posts/#{post2.id}"
       expect(page).to have_link 'a', href: "/posts/#{post3.id}"
 
-      # キャプション「今日」で検索する
-      fill_in 'キャプション', with: '今日'
+      # 内容「今日」で検索する
+      fill_in '内容', with: '今日'
       click_button '検索する'
       expect(page).to have_link 'a', href: "/posts/#{post1.id}"
       expect(page).to have_link 'a', href: "/posts/#{post2.id}"

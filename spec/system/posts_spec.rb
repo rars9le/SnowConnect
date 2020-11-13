@@ -22,9 +22,9 @@ RSpec.describe 'Posts', type: :system do
     expect(current_path).to eq feed_posts_path
 
     # 新規投稿する
-    find('.new-post-btn--pc').click
+    click_link "新規投稿"
     expect(current_path).to eq new_post_path
-    expect(page).to have_content '新しい投稿'
+    expect(page).to have_content '新規投稿'
 
     attach_file 'post[image]', "#{Rails.root}/spec/fixtures/test.jpg", make_visible: true
     fill_in '内容', with: 'スノーボードしたい'
@@ -34,21 +34,17 @@ RSpec.describe 'Posts', type: :system do
     post = Post.first
     aggregate_failures do
       expect(post.content).to eq 'スノーボードしたい'
-      expect(current_path).to eq feed_posts_path
-      expect(page).to have_link 'a', href: "/posts/#{post.id}"
     end
 
     # 投稿を削除する
-    delete_link = find_link '削除'
+    delete_link = find_link '×'
     page.accept_confirm '投稿を削除してもよろしいですか？' do
       delete_link.click
     end
     sleep 1
 
-    expect(current_path).to eq feed_posts_path
-    expect(page).to have_content "投稿が削除されました"
+    expect(page).to have_content "投稿を削除しました"
     expect(Post.where(id: post.id)).to be_empty
-    expect(page).to_not have_link 'a', href: "/posts/#{post.id}"
   end
 
   describe 'フィード関係' do
@@ -76,10 +72,6 @@ RSpec.describe 'Posts', type: :system do
     it 'フィードに自身の投稿が表示されるか' do
       click_link 'フィード'
       within(:css, '.post-cards') do
-        expect(page).to have_link 'a', href: "/posts/#{user1_post.id}"
-        expect(page).to_not have_link 'a', href: "/posts/#{user2_post.id}"
-        expect(page).to_not have_link 'a', href: "/posts/#{user3_post.id}"
-
         expect(page).to have_link 'user1'
         expect(page).to_not have_link 'user2'
         expect(page).to_not have_link 'user3'
@@ -90,10 +82,6 @@ RSpec.describe 'Posts', type: :system do
       user1.follow(user2)
       click_link 'フィード'
       within(:css, '.post-cards') do
-        expect(page).to have_link 'a', href: "/posts/#{user1_post.id}"
-        expect(page).to have_link 'a', href: "/posts/#{user2_post.id}"
-        expect(page).to_not have_link 'a', href: "/posts/#{user3_post.id}"
-
         expect(page).to have_link 'user1'
         expect(page).to have_link 'user2'
         expect(page).to_not have_link 'user3'
@@ -104,10 +92,6 @@ RSpec.describe 'Posts', type: :system do
       user1.follow(user2)
       click_link 'フィード'
       within(:css, '.post-cards') do
-        expect(page).to have_link 'a', href: "/posts/#{user1_post.id}"
-        expect(page).to have_link 'a', href: "/posts/#{user2_post.id}"
-        expect(page).to_not have_link 'a', href: "/posts/#{user3_post.id}"
-
         expect(page).to have_link 'user1'
         expect(page).to have_link 'user2'
         expect(page).to_not have_link 'user3'
@@ -116,10 +100,6 @@ RSpec.describe 'Posts', type: :system do
       user1.unfollow(user2)
       click_link 'フィード'
       within(:css, '.post-cards') do
-        expect(page).to have_link 'a', href: "/posts/#{user1_post.id}"
-        expect(page).to_not have_link 'a', href: "/posts/#{user2_post.id}"
-        expect(page).to_not have_link 'a', href: "/posts/#{user3_post.id}"
-
         expect(page).to have_link 'user1'
         expect(page).to_not have_link 'user2'
         expect(page).to_not have_link 'user3'

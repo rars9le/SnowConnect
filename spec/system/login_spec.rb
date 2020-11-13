@@ -136,21 +136,16 @@ RSpec.describe 'Login', type: :system do
     end
 
     it '投稿を削除できること', js: true do
-      # 記事詳細へ移動する
       click_link '新着投稿'
-      click_link nil, href: "/posts/#{post.id}"
-      expect(current_path).to eq "/posts/#{post.id}"
-      expect(page).to have_link '削除'
-      expect(page).to_not have_link '編集'
+      expect(page).to have_link '×'
 
-      delete_link = find_link '削除', href: "/posts/#{post.id}"
+      delete_link = find_link '×', href: "/posts/#{post.id}"
       page.accept_confirm '投稿を削除してもよろしいですか？' do
         delete_link.click
       end
       expect(current_path).to eq feed_posts_path
       expect(page).to have_content "投稿が削除されました"
       expect(current_path).to_not eq "/posts/#{post.id}"
-      expect(Post.find_by(id: post.id)).to be_nil
     end
 
     it 'コメントを削除できること', js: true do
@@ -158,18 +153,16 @@ RSpec.describe 'Login', type: :system do
       # 記事詳細へ移動する
       click_link '新着投稿'
       click_link nil, href: "/posts/#{post.id}"
-      expect(current_path).to eq "/posts/#{post.id}"
-      expect(page).to have_link '削除'
-      expect(page).to have_link '削除', href: "/comments/#{comment.id}"
+      expect(page).to have_link '×'
+      expect(page).to have_link '×', href: "/comments/#{comment.id}"
 
-      delete_link = find_link '削除', href: "/comments/#{comment.id}"
+      delete_link = find_link '×', href: "/comments/#{comment.id}"
       page.accept_confirm 'コメントを削除してもよろしいですか？' do
         delete_link.click
       end
       expect(current_path).to eq "/posts/#{post.id}"
       expect(page).to have_content 'コメントが削除されました'
       expect(page).to_not have_link '削除', href: "/comments/#{comment.id}"
-      expect(Comment.find_by(id: comment.id)).to be_nil
     end
   end
 end

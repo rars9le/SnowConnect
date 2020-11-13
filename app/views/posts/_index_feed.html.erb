@@ -27,9 +27,9 @@
       </div>
       <div class="post-action">
         <span>
-            <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-sm", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}" %>
+            <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-sm btn-com", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}" %>
             <% if post.comments.any? %>
-              <%= "#{post.comments.count}" %>
+              <span class="com-count"><%= "#{post.comments.count}" %></span>
           <% end %>
         </span>
         <span class="btn">
@@ -37,13 +37,16 @@
             <% if current_user.likes?(post) %>
               <%= form_with(model: current_user.favorites.find_by(post_id: post.id), local: true, method: :delete) do |f| %>
                 <%= hidden_field_tag :post_id, post.id %>
-                <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm" %>
+                <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm btn-fav" %>
                 <span class="fav-count"><%= "#{post.favorites.count}" %></span>
               <% end %>
             <% else %>
               <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
                 <%= hidden_field_tag :post_id, post.id %>
-                <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm" %>
+                <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm btn-fav" %>
+                <% if post.favorites.count >= 1 %>
+                  <span class="fav-count"><%= "#{post.favorites.count}" %></span>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
