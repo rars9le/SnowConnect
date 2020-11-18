@@ -27,7 +27,7 @@
       </div>
       <div class="post-action">
         <span>
-            <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-sm btn-com", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}" %>
+            <%= button_tag '<i class="fas fa-comment"></i>'.html_safe, class: "btn btn-sm btn-com", "data-toggle": "collapse", href: "#comment_form_#{post.id}", "aria-expanded": "false", "aria-controls": "comment_form_#{post.id}", id: 'comment-link' %>
             <% if post.comments.any? %>
               <span class="com-count"><%= "#{post.comments.count}" %></span>
           <% end %>
@@ -62,12 +62,14 @@
       <% end %>
     </div>
 
-    <% if user_signed_in? && current_user.id == post.user.id %>
-      <div class="p-1 post-delete">
-        <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-sm" do %>
-          <p class="del-icon">×</p>
-        <% end %>
-      </div>
+    <% if user_signed_in? %>
+      <% if current_user.id == post.user.id || current_user.admin? %>
+        <div class="p-1 post-delete">
+          <%= link_to post, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-sm", :id => 'post_link' do %>
+            <p class="del-icon">×</p>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
 
   </div>

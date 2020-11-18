@@ -1,0 +1,18 @@
+example_id                               | status  | run_time       |
+---------------------------------------- | ------- | -------------- |
+./spec/system/comments_spec.rb[1:1]      | failed  | 14.06 seconds  |
+./spec/system/login_spec.rb[1:1:1]       | passed  | 2.7 seconds    |
+./spec/system/login_spec.rb[1:2:1]       | passed  | 0.1792 seconds |
+./spec/system/login_spec.rb[1:2:2]       | passed  | 0.2435 seconds |
+./spec/system/login_spec.rb[1:3:1]       | passed  | 2.58 seconds   |
+./spec/system/login_spec.rb[1:3:2]       | failed  | 6.63 seconds   |
+./spec/system/login_spec.rb[1:3:3]       | passed  | 3.63 seconds   |
+./spec/system/posts_spec.rb[1:1]         | passed  | 14.43 seconds  |
+./spec/system/posts_spec.rb[1:2:1]       | passed  | 4.41 seconds   |
+./spec/system/posts_spec.rb[1:2:2]       | passed  | 4.54 seconds   |
+./spec/system/posts_spec.rb[1:2:3]       | passed  | 4.57 seconds   |
+./spec/system/relationships_spec.rb[1:1] | passed  | 15.1 seconds   |
+./spec/system/search_spec.rb[1:1:1]      | passed  | 5.41 seconds   |
+./spec/system/search_spec.rb[1:1:2]      | pending | 2.33 seconds   |
+./spec/system/search_spec.rb[1:1:3]      | pending | 2.38 seconds   |
+./spec/system/search_spec.rb[1:1:4]      | pending | 2.39 seconds   |

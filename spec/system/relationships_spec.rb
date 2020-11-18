@@ -20,7 +20,7 @@ RSpec.describe 'Relationships', type: :system do
   it 'ユーザーをフォロー/フォロー解除する', js: true do
     visit root_path
 
-    # user2がログインする
+    # user1がログインする
     click_link 'ログイン'
     expect(current_path).to eq login_path
     expect(page).to have_content '次回から自動的にログイン'
@@ -32,41 +32,42 @@ RSpec.describe 'Relationships', type: :system do
 
     # user1のページへ移動する
     click_link '新着投稿'
-    click_link 'User1'
-    expect(current_path).to eq "/users/#{user1.id}"
+    click_link 'User2'
+    expect(current_path).to eq "/users/#{user2.id}"
 
-    # user1をフォローする
+    # user2をフォローする
     expect(page).to have_content 'フォロワー 0'
     expect do
-      click_link 'フォロー'
+      click_on 'フォロー'
       expect(page).to have_content 'フォロワー 1'
       expect(page).to_not have_content 'フォロワー 0'
-      expect(page).to have_content 'フォロー中'
-    end.to change(user2.followings, :count).by(1) &
-           change(user1.followers, :count).by(1)
+    end.to change(user1.followings, :count).by(1) &
+           change(user2.followers, :count).by(1)
 
-    # マイページ(user2)に移動する
-    visit user_path(user2)
-    expect(current_path).to eq "/users/#{user2.id}"
+    # マイページ(user1)に移動する
+    visit user_path(user1)
+    expect(current_path).to eq "/users/#{user1.id}"
     expect(page).to have_content 'フォロー 1'
-    expect(page).to have_content 'user1'
-    expect(page).to have_content 'フォロー中'
+    click_on 'フォロー 1'
+    expect(page).to have_content 'User2'
 
-    # user1のフォローを解除する
+    # user2のフォローを解除する
     expect do
-      click_link 'フォロー中'
+      click_on 'フォロー中'
       expect(page).to have_content 'フォロー 0'
       expect(page).to_not have_content 'フォロー 1'
-    end.to change(user2.followings, :count).by(-1) &
-           change(user1.followers, :count).by(-1)
+    end.to change(user1.followings, :count).by(-1) &
+           change(user2.followers, :count).by(-1)
 
     visit user_path(user1)
-    expect(find('.tab-content')).to_not have_content 'user1'
+    expect(find('.tab-content')).to_not have_content 'User2'
+    click_on 'フォロー 0'
     expect(page).to have_content '誰もフォローしていません'
 
     # user2のユーザーページに移動する
     visit user_path(user2)
-    expect(find('.tab-content')).to_not have_content 'user2'
+    expect(find('.tab-content')).to_not have_content 'User1'
+    click_on 'フォロワー 0'
     expect(page).to have_content 'フォローされていません'
   end
 end

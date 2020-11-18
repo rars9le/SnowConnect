@@ -8,7 +8,7 @@ RSpec.describe 'Posts', type: :system do
            password: '12345678')
   end
 
-  it '新規投稿、編集、削除をする', js: true do
+  it '新規投稿、削除をする', js: true do
     visit root_path
 
     # ログインする
@@ -22,12 +22,8 @@ RSpec.describe 'Posts', type: :system do
     expect(current_path).to eq feed_posts_path
 
     # 新規投稿する
-    click_link "新規投稿"
-    expect(current_path).to eq new_post_path
-    expect(page).to have_content '新規投稿'
-
     attach_file 'post[image]', "#{Rails.root}/spec/fixtures/test.jpg", make_visible: true
-    fill_in '内容', with: 'スノーボードしたい'
+    fill_in 'post-area', with: 'スノーボードしたい'
     click_button '投稿する'
     sleep 5
 
@@ -37,10 +33,8 @@ RSpec.describe 'Posts', type: :system do
     end
 
     # 投稿を削除する
-    delete_link = find_link '×'
-    page.accept_confirm '投稿を削除してもよろしいですか？' do
-      delete_link.click
-    end
+    click_link 'post_link'
+    page.driver.browser.switch_to.alert.accept
     sleep 1
 
     expect(page).to have_content "投稿を削除しました"

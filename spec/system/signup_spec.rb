@@ -28,20 +28,20 @@ RSpec.describe 'Signup', type: :system do
     expect(page).to have_content '確認用パスワードとパスワードの入力が一致しません'
 
     # 成功ケース
-    fill_in 'ユーザー名（１０文字以内）', with: 'Test'
-    fill_in 'メールアドレス', with: 'test@example.com'
-    fill_in 'パスワード（８文字以上）', with: 'password_test'
-    fill_in '確認用パスワード', with: 'password_test'
+    fill_in 'ユーザー名（１０文字以内）', with: 'Test1'
+    fill_in 'メールアドレス', with: 'test1@example.com'
+    fill_in 'パスワード（８文字以上）', with: 'password_test1'
+    fill_in '確認用パスワード', with: 'password_test1'
     expect do
       click_button '新規登録'
       expect(current_path).to eq feed_posts_path
-      expect(page).to have_content 'Testさん'
+      expect(page).to have_content 'Test1さん'
     end.to change(User, :count).by(1)
 
     aggregate_failures do
-      testUser = User.find_by!(name: 'test')
-      expect(testUser.name).to eq 'Test'
-      expect(testUser.email).to eq 'test@example.com'
+      testUser = User.find_by!(name: 'test1')
+      expect(testUser.name).to eq 'Test1'
+      expect(testUser.email).to eq 'test1@example.com'
     end
   end
 end

@@ -7,7 +7,7 @@
       <%= search_form_for @q, url: search_users_path, method: :get, local: true do |f| %>  
         <div class="form-group">
           <%= f.label :name, '名前' %>
-          <%= f.search_field :name_cont, class: 'form-control', placeholder: '検索キーワードを入力してください' %>
+          <%= f.search_field :name_cont, class: 'form-control', placeholder: '検索キーワードを入力してください', id: 'cond-name' %>
         </div>
         <div class="form-group">
           <%= f.label :age, '年齢' %>

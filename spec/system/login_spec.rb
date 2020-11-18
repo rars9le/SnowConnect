@@ -69,6 +69,14 @@ RSpec.describe 'Login', type: :system do
       click_button 'かんたんログイン'
       expect(current_path).to eq feed_posts_path
       expect(page).to have_content 'GuestUserさん'
+
+      # ログアウトする
+      click_link 'GuestUserさん'
+      click_link 'ログアウト'
+
+      expect(page).to_not have_content 'GuestUserさん'
+      expect(page).to have_link '新規登録'
+      expect(page).to have_link 'ログイン'
     end
   end
 
@@ -79,7 +87,6 @@ RSpec.describe 'Login', type: :system do
 
     before '管理者としてログイン' do
       visit root_path
-
       # ログインする
       click_link 'ログイン'
       expect(current_path).to eq login_path
@@ -137,32 +144,13 @@ RSpec.describe 'Login', type: :system do
 
     it '投稿を削除できること', js: true do
       click_link '新着投稿'
-      expect(page).to have_link '×'
+      expect(page).to have_link('post_link')
 
-      delete_link = find_link '×', href: "/posts/#{post.id}"
-      page.accept_confirm '投稿を削除してもよろしいですか？' do
-        delete_link.click
-      end
-      expect(current_path).to eq feed_posts_path
-      expect(page).to have_content "投稿が削除されました"
-      expect(current_path).to_not eq "/posts/#{post.id}"
-    end
+      click_link 'post_link'
+      page.driver.browser.switch_to.alert.accept
 
-    it 'コメントを削除できること', js: true do
-      comment = post.comments.first
-      # 記事詳細へ移動する
-      click_link '新着投稿'
-      click_link nil, href: "/posts/#{post.id}"
-      expect(page).to have_link '×'
-      expect(page).to have_link '×', href: "/comments/#{comment.id}"
-
-      delete_link = find_link '×', href: "/comments/#{comment.id}"
-      page.accept_confirm 'コメントを削除してもよろしいですか？' do
-        delete_link.click
-      end
-      expect(current_path).to eq "/posts/#{post.id}"
-      expect(page).to have_content 'コメントが削除されました'
-      expect(page).to_not have_link '削除', href: "/comments/#{comment.id}"
+      expect(current_path).to eq posts_path
+      expect(page).to have_content "投稿を削除しました"
     end
   end
 end

@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
   mount_uploader :avator, AvatorUploader
 
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 10 }
   validates :introduction, length: { maximum: 150 }
   before_validation { email.downcase! }
   validates :email, presence: true, length: { maximum: 255 },
