@@ -1,0 +1,24 @@
+<ul class="list-unstyled">
+  <% posts.each do |post| %>
+    <li class="media mb-3">
+      <% if post.user.avator? %>
+        <img class="mr-2 rounded icon" src='<%= post.user.avator %>' width="50px" height="50px" alt="ユーザーアイコン">
+      <% else %>
+        <image src="/assets/default.png" class=" mr-2 rounded icon" width="50px" height="50px" alt="ユーザーアイコン" %>
+      <% end %>
+      <div class="media-body">
+        <div>
+          <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"><%= post.created_at.to_s(:datetime_jp) %></span>
+        </div>
+        <div>
+          <p class="mb-0"><%= post.content %></p>
+        </div>
+        <div>
+          <span><%= "コメント#{post.comments.count}件" %></span>
+          <span><%= "いいね！#{post.favorites.count}件" %></span>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate posts %>
+</ul>

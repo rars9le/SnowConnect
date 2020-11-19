@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <%= form_with model: @message do |f|  %>
+    <div class="d-flex flex-row form-group">
+      <%= f.hidden_field :room_id, value: room.id %>
+      <%= f.text_area :message, rows: 1, class: 'form-control col-4 mr-2', placeholder:'チャットを入力' %>
+      <%= f.submit value: "送信", class: 'btn btn-primary', remote: true %>
+    </div>
+  <% end %>
+<% else %>
+  <div>チャットをするにはログインして下さい。</div>
+<% end %>

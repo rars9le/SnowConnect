@@ -1,0 +1,9 @@
+<div>
+  <%= form_with model: comment, method: post do |f| %>
+    <%= f.hidden_field :post_id, :value => post.id %>
+    <div class="form-group row pl-3">
+      <%= f.text_area :comment, class: 'form-control col-sm-6', rows: 1, placeholder: "コメント", id: 'comment-area' %>
+      <%= f.submit '投稿', class: 'btn btn-secondary ml-2' %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,59 @@
+// .avator-image {
+//   cursor: pointer;
+// }
+// #user_avator {
+//   display: none;
+// }
+
+.nav-link {
+  color: #999;
+  &:hover {
+    color: #495057;
+  }
+}
+
+.btn {
+  display: inline-block;
+}
+
+.card-index {
+  margin: 0px 0;
+}
+
+.dotted-hr {
+  border-top: 0.13rem dotted #777;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+}
+
+.search-user-card {
+  background-color: rgba(0,0,0,0.1);
+  padding: 10px;
+  min-height: 100px;
+  .user-name {
+    margin: 15px auto 10px auto;
+    text-decoration: none;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+
+.no-results {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 1.15rem;
+  width: 100%;
+  margin-top: 20px;
+  @include sm {
+    height: 100px;
+  }
+  .no-results-title {
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+  }
+}
+
+.link-withdrawal{
+  color:red;
+}

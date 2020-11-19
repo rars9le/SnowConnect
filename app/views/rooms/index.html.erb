@@ -1,0 +1,32 @@
+<% provide :title, 'トークルーム一覧' %>
+
+<div class="container mt-3">
+  <div class="row mx-auto">
+    <div class="offset-sm-2 col-sm-8">
+      <h2 class="form_title">トークルーム一覧</h2>
+      <% if @rooms.present? %>
+        <% @rooms.each do |room| %>
+
+          <%= link_to room_path(room) do %>  
+            <div class="d-flex flex-row p-2 border chat-area">
+              <div>
+                <%= opponent_user_avator(room) %>
+              </div>
+              <div class="p-1 talk-content">
+                <%= opponent_user_name(room) %>
+                <%= most_new_message_date_preview(room) %>
+                <div class="talk-message">
+                  <%= most_new_message_preview(room) %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+        <% end %>
+      <% else %>
+        <p>トークルームが存在しません。</p>
+      <% end %>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<% provide :title, '検索' %>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <h4 class="form_title pl-1">スキー・スノーボード仲間検索</h2>
+      <%= search_form_for @q, url: search_users_path, method: :get, local: true do |f| %>  
+        <div class="form-group">
+          <%= f.label :name, '名前' %>
+          <%= f.search_field :name_cont, class: 'form-control', placeholder: '検索キーワードを入力してください', id: 'cond-name' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :age, '年齢' %>
+          </br>
+          <div class="d-flex flex-row">
+            <%= f.select :age_gteq, (3..99).to_a, { prompt: "問わない"}, { class: 'form-control' } %>
+            <span class="mx-1">〜</span>
+            <%= f.select :age_lteq, (3..99).to_a, { prompt: "問わない"}, { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :sex, '性別' %>
+          </br>
+          <%= f.select :sex_eq, {'男性': 0, '女性': 1}, { prompt: "問わない"}, { class: 'form-control' } %>
+        </div>
+        <div class="form-group">
+          <% @snowstyle.each do |snow_style| %>
+            <%= hidden_field_tag :snow_style, "" %>
+            <%= f.check_box :snow_style_cont, {multiple: true}, snow_style, nil %>
+            <%= snow_style %>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <%= f.label :スタイル %>
+          </br>
+          <% @playstyle.each do |play_style| %>
+            <%= hidden_field_tag :play_style, "" %>
+            <%= f.check_box :play_style_cont, {multiple: true}, play_style, nil %>
+            <%= play_style %>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <%= f.label :home_gelande, 'ホームゲレンデ' %>
+          <%= f.search_field :home_gelande_cont, class: 'form-control', placeholder: '検索キーワードを入力してください' %>
+        </div>
+        <div class="d-flex justify-content-center mt-1">
+          <%= f.submit '検索する', class: 'btn btn-primary'%>
+        </div>    
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<hr class="dotted-hr">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <h4 class="form_title pl-1">検索結果</h2>
+      <% if @users.any? %>
+        <div class="row user-cards">
+          <% @users.each do |user| %>
+            <div class="col-lg-4 col-md-6 col-sm-6 card-index pb-2">
+              <div class="search-user-card card align-items-center">
+                <% if user.avator? %>
+                  <%= link_to image_tag(user.avator.to_s, size: "100x100", class: "rounded-circle", alt: "avator image"), user %>
+                <% else %>
+                  <%= link_to image_tag("default.png", size: "100x100", class: "rounded-circle", alt: "avator image"), user %>
+                <% end %>
+                <%= link_to user.name, user, class: 'user-name' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="no-results d-flex flex-column align-items-center justify-content-center mx-auto">
+          <div class="no-results-title font-weight-bold">検索結果が存在しません</div>
+        </div>
+      <% end %>
+
+      <%= paginate @users %>
+      <%
+=begin%>
+ <%= render 'shared/infinitescroll' %>  
+<%
+=end%>
+
+    </div>
+  </div>
+</div>

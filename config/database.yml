@@ -48,7 +48,10 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: SnowConnect_production
   username: SnowConnect
   password: <%= ENV['SNOWCONNECT_DATABASE_PASSWORD'] %>
+

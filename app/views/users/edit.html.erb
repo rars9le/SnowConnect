@@ -1,0 +1,142 @@
+<% provide :title, 'プロフィール編集' %>
+
+<div class="container user_form mt-3 mb-3 ">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <h2 class="text-center mt-4 mb-3">プロフィール編集</h2>
+
+      <%= form_with(model: @user, local: true) do |f| %>
+
+        <%= f.label :avator, 'プロフィール画像' %>
+        <div class="text-center mb-3">
+          <%= f.label :avator do %>
+            <img id="avator_img_prev" src="#" class='hidden rounded-circle z-depth-0 mb-4' style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" alt="avator image"/>
+            <% if @user.avator? %>
+              <%= f.label :avator do %>
+                <%= image_tag(@user.avator.url, size: "200x200", class: "avator_present_img rounded-circle z-depth-0 avator-image", alt: "avator image") %>
+              <% end %>
+            <% else %>
+              <%= f.label :avator do %>
+                <%= image_tag("default.png", size: "200x200", class: "avator_present_img rounded-circle z-depth-0 avator-image", alt: "avator image") %>
+              <% end %>
+            <% end %>
+            <%= f.file_field :avator, class:'hidden' %>
+            <%= f.hidden_field :avator_cache %>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :name, 'ユーザー名（１０文字以内）' %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+
+        <%unless @user.guest? %>
+          <div class="form-group">
+            <%= f.label :email, 'メールアドレス' %>
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label :age, '年齢' %>
+          </br>
+          <%= f.select :age, (3..99).to_a, { prompt: "選択してください"}, { class: 'form-control' } %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :age_open_range, '年齢公開範囲' %>
+          </br>
+          <%= f.select :age_open_range, [['公開', 1], ['非公開', 0]], { prompt: '選択してください'}, { class: "form-control" } %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :性別 %>
+          </br>
+          <%= f.label :男性 %>
+          <%= f.radio_button :sex, :man %>
+          <%= f.label :女性 %>
+          <%= f.radio_button :sex, :woman %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :sex_open_range, '性別公開範囲' %>
+          </br>
+          <%= f.select :sex_open_range, [['公開', 1], ['非公開', 0]], { prompt: '選択してください'}, { class: "form-control" } %>
+        </div>
+
+        <div class="form-group">
+          <% @snowstyle.each do |snow_style| %>
+            <%= hidden_field_tag :snow_style, "" %>
+            <%= f.check_box :snow_style, {multiple: true, :checked => @user.snow_style.present? ? @user.snow_style.include?(snow_style) : false}, snow_style, nil %>
+            <%= snow_style %>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :スタイル %>
+          </br>
+          <% @playstyle.each do |play_style| %>
+            <%= hidden_field_tag :play_style, "" %>
+            <%= f.check_box :play_style, {multiple: true, :checked => @user.play_style.present? ? @user.play_style.include?(play_style) : false}, play_style, nil %>
+            <%= play_style %>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :home_gelande, 'ホームゲレンデ' %>
+          <%= f.text_area :home_gelande, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :introduction, '自己紹介（１５０文字以内）' %>
+          <%= f.text_area :introduction, class: 'form-control' %>
+        </div>
+
+        <%unless @user.guest? %>
+          <div class="form-group">
+            <%= f.label :password, 'パスワード(変更する場合)' %>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password_confirmation, 'パスワード(再入力)' %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </div>
+        <% end %>
+
+        <div class="d-flex justify-content-center mt-2">
+          <%= link_to 'キャンセル', user_path(@user.id), class: 'btn btn-secondary mr-4' %>
+          <%= f.submit '更新', class: 'btn btn-secondary ' %>
+        </div>  
+
+        <% unless current_user.guest? || current_user.admin? %>
+          <div class="d-flex justify-content-center mt-2">
+            <%= link_to '退会する', confirm_withdrawal_user_path(@user.id), class: 'link-withdrawal' %>
+          </div> 
+        <% end %>
+      <% end %>
+  
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+  $(function() {
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#avator_img_prev').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#user_avator").change(function(){
+      $('#avator_img_prev').removeClass('hidden');
+      $('.avator_present_img').remove();
+      readURL(this);
+    });
+  });
+</script>

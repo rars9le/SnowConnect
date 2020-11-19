@@ -1,0 +1,34 @@
+<% provide :title, 'すべてのユーザー' %>
+
+<% if @users.any? %>
+
+  <div class="container">
+    <h2 class="text-center font-weight-bold mt-4 mb-3">すべてのユーザー</h2>
+    <div class="row user-cards">
+      <% @users.each do |user| %>
+        <div class="col-lg-4 col-md-6 col-sm-6 card-index">
+          <div class="card align-items-center mb-2">
+            <% if user.avator? %>
+              <%= link_to image_tag(user.avator.to_s, size: "150x150", class: "rounded-circle", alt: "avator image"), user %>
+            <% else %>
+              <%= link_to image_tag("default.png", size: "150x150", class: "rounded-circle", alt: "avator image"), user %>
+            <% end %>
+            <%= link_to user.name, user, class: 'user-name' %>
+
+            <% if current_user.admin? && !(user.admin?) && !(user.guest?) %>
+              <%= link_to 'このユーザーを削除する', user, method: :delete, data: { confirm: 'このユーザーを削除しますか？' }, class:'btn btn-danger' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%= paginate @users %>
+    <%
+=begin%>
+ <%= render 'shared/infinitescroll' %>  
+<%
+=end%>
+
+  </div>
+<% end %>

@@ -1,0 +1,86 @@
+.post-form {
+  background-color: #eee;
+  border: solid 2px #707070;
+  border-radius: 0.5rem;
+  padding: 10px 20px 40px 10px;
+}
+
+.post-cards {
+  padding: 0 20px;
+}
+
+.card-index {
+  margin: 0px 0;
+}
+
+.img_preview {
+  vertical-align: top;
+  image-orientation: from-image;
+  position: relative;
+  max-width: 50%;
+}
+
+.post-area:hover {
+  background-color: #EEEEEE;
+}
+
+.post-area:hover p{
+  background-color: #EEEEEE;
+}
+
+.post-delete{
+  margin-left: auto;
+}
+
+.post-avator {
+  float: left;
+  line-height: 48px;
+  a {
+    text-decoration: none;
+    color: #666;
+  }
+}
+
+.post-content {
+  a {
+    text-decoration: none;  
+    color: #666;
+  }
+}
+
+.post-date {
+  text-align: right;
+  color: gray;
+  font-size: 0.8rem;
+}
+
+.com-count {
+  font-size: 0.9rem;
+}
+
+.fav-count {
+  font-size: 0.9rem;
+}
+
+.user_avator {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.nav {
+  list-style: none;
+}
+
+.del-icon{
+  text-decoration: none;
+  border-style: none;
+}
+
+.btn-com {
+  padding: 0;
+}
+
+.btn-fav {
+  padding: 0;
+}
