@@ -33,24 +33,24 @@ RSpec.describe 'Users', type: :system do
     expect(current_path).to eq user_path(user)
     expect(page).to have_content 'TestUser'
 
-    click_link 'プロフィール編集'
+    visit edit_user_path(user)
     expect(current_path).to eq edit_user_path(user)
     expect(page).to have_content 'ユーザー名（１０文字以内）'
     expect(page).to have_content 'メールアドレス'
     expect(page).to have_content '自己紹介（１５０文字以内）'
 
-    attach_file 'user[avatar]', "#{Rails.root}/spec/fixtures/rspec_test.jpg", make_visible: true
+    attach_file 'user[avator]', "#{Rails.root}/spec/fixtures/test.jpg", make_visible: true
     fill_in 'ユーザー名', with: 'Alice'
     fill_in 'メールアドレス', with: 'alice@example.com'
     fill_in '自己紹介', with: '初めまして、よろしくお願いします。'
-    click_on '変更を保存する'
+    click_on '更新'
     expect(current_path).to eq user_path(user)
 
     user.reload
     aggregate_failures do
       expect(user.name).to eq 'Alice'
       expect(user.email).to eq 'alice@example.com'
-      expect(user.profile).to eq '初めまして、よろしくお願いします。'
+      expect(user.introduction).to eq '初めまして、よろしくお願いします。'
     end
   end
 
