@@ -47,10 +47,12 @@ i = 0
 users = User.order(:id).take(3)
 
 users.each do
+  contents = ["雪山さいこう！" , "いい天気だなぁ" , "めっちゃ景色良い！" , "今日もゲレンデに来てます", "シーズンインしました！",
+              "良かったら一緒に滑りましょう！", "良い写真撮れた", "やっぱり雪山楽しい！", "関西で滑ってます" , "ジブ仲間募集中です"]
   1.upto(7) do |j|
     j = ((i * 7) + j)
     image = open("#{Rails.root}/db/fixtures/post/post-#{j}.jpg")
-    content = Faker::Lorem.sentence
+    content = contents.sample
 
     users[i].posts.create!(
       image: image,
