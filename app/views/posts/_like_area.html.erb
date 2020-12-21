@@ -1,0 +1,17 @@
+<span id="like_btn_<%= post.id %>">
+  <% if current_user.likes?(post) %>
+    <%= form_with(model: current_user.favorites.find_by(post_id: post.id), method: :delete) do |f| %>
+      <%= hidden_field_tag :post_id, post.id %>
+      <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm btn-fav" %>
+      <span class="fav-count"><%= "#{post.favorites.count}" %></span>
+    <% end %>
+  <% else %>
+    <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
+      <%= hidden_field_tag :post_id, post.id %>
+      <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-sm btn-fav" %>
+      <% if post.favorites.count >= 1 %>
+        <span class="fav-count"><%= "#{post.favorites.count}" %></span>
+      <% end %>
+    <% end %>
+  <% end %>
+</span>
